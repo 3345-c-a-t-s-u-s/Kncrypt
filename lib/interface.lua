@@ -1516,7 +1516,7 @@ function InterfaceManagerTable:CreateHover(ui :ImageButton , default :number)
 end;
 
 function InterfaceManagerTable:GetTextSize(text,fontSize,font,custom_w)
-	return game:GetService('TextService'):GetTextSize(text,fontSize,font,Vector2.new(custom_w or math.huge,math.huge))	
+	return game:GetService('TextService'):GetTextSize(text:gsub("<.->", ""),fontSize,font,Vector2.new(custom_w or math.huge,math.huge))	
 end;
 
 
@@ -4403,8 +4403,11 @@ function InterfaceManagerTable.new(args)
 			
 			KNC_Interface:SetHide();
 			
+			local InterfaceSize = InterfaceManagerTable:GetTextSize(Title.Text , Title.TextSize , Title.Font)
+			
 			InterfaceManagerTable:Tween(MainFrame,TweenInfo.new(0.75, Enum.EasingStyle.Quint),{
-				Size = UDim2.fromOffset(265,25),
+				Size = UDim2.fromOffset(InterfaceSize.X + 100,25),
+				Position = UDim2.fromOffset(MainFrame.AbsolutePosition.X + (MainFrame.AbsoluteSize.X / 2),MainFrame.AbsolutePosition.Y)
 			})
 			
 			InterfaceManagerTable:Tween(Headers,TweenInfo.new(0.5, Enum.EasingStyle.Quint),{
