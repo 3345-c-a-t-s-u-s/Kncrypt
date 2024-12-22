@@ -1458,7 +1458,7 @@ end;
 
 function InterfaceManagerTable:NewRipple(Parent)
 	Parent.ClipsDescendants = true
-	
+
 	local ripple = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
 
@@ -1483,19 +1483,19 @@ function InterfaceManagerTable:NewRipple(Parent)
 	ripple.BackgroundTransparency = 0.98
 	ripple.Position = UDim2.new(0, mouseRelativePosition.X, 0, mouseRelativePosition.Y)
 	ripple.Parent = Parent
-	
+
 	local Size_UP = UDim2.new(50,0,50,0)
-	
+
 	InterfaceManagerTable:Tween(ripple,TweenInfo.new(1),{Size = Size_UP,BackgroundTransparency = 1}):Play()
-	
+
 	game:GetService('Debris'):AddItem(ripple,1.2)
 end
 
 function InterfaceManagerTable:Tween(Frame :GuiObject , TweenInfo: TweenInfo , Properties : {})
 	local Instance = InterfaceManagerTable.TweenService:Create(Frame,TweenInfo,Properties);
-	
+
 	Instance:Play();
-	
+
 	return Instance
 end;
 
@@ -1505,13 +1505,13 @@ function InterfaceManagerTable:CreateHover(ui :ImageButton , default :number)
 			ImageTransparency = 0.1;
 		})
 	end)
-	
+
 	ui.MouseLeave:Connect(function()
 		InterfaceManagerTable:Tween(ui,TweenInfo.new(0.1),{
 			ImageTransparency = default;
 		})
 	end)
-	
+
 	ui.ImageTransparency = default;
 end;
 
@@ -1538,7 +1538,7 @@ function InterfaceManagerTable:CreateDropdown()
 	Dropdown.Size = UDim2.new(0, 150, 0, 0)
 	Dropdown.ZIndex = 100
 	Dropdown.AnchorPoint = Vector2.new(0.5,0.5);
-	
+
 	UIStroke.Transparency = 0.500
 	UIStroke.Color = Color3.fromRGB(30, 30, 30)
 	UIStroke.Parent = Dropdown
@@ -1562,11 +1562,11 @@ function InterfaceManagerTable:CreateDropdown()
 	UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout.Padding = UDim.new(0, 2)
-	
+
 	UIListLayout:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
 		ScrollingFrame.CanvasSize = UDim2.fromOffset(0,UIListLayout.AbsoluteContentSize.Y)
 	end)
-	
+
 	DropShadow.Name = "DropShadow"
 	DropShadow.Parent = Dropdown
 	DropShadow.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -1581,21 +1581,21 @@ function InterfaceManagerTable:CreateDropdown()
 	DropShadow.ImageTransparency = 1
 	DropShadow.ScaleType = Enum.ScaleType.Slice
 	DropShadow.SliceCenter = Rect.new(49, 49, 450, 450);
-	
+
 	local args = {};
-	
+
 	args.Enabled = false;
 	args.ParentEnabled = nil;
 	args.Hover = false;
-	
+
 	Dropdown.MouseEnter:Connect(function()
 		args.Hover = true;
 	end)
-	
+
 	Dropdown.MouseLeave:Connect(function()
 		args.Hover = false;
 	end)
-	
+
 	InterfaceManagerTable.InputService.InputBegan:Connect(function(a)
 		if a.UserInputType == Enum.UserInputType.MouseButton1 or a.UserInputType == Enum.UserInputType.Touch then
 			if not args.Hover and args.Enabled then
@@ -1603,7 +1603,7 @@ function InterfaceManagerTable:CreateDropdown()
 			end;
 		end
 	end)
-	
+
 	task.spawn(function()
 		while true do task.wait()
 			pcall(function()
@@ -1619,31 +1619,31 @@ function InterfaceManagerTable:CreateDropdown()
 			end)
 		end;
 	end)
-	
+
 	function args:Show()
 		args.Enabled = true;
-		
+
 		InterfaceManagerTable:Tween(Dropdown,TweenInfo.new(0.65 , Enum.EasingStyle.Quint),{
 			Size = UDim2.new(0, 150, 0, math.clamp(UIListLayout.AbsoluteContentSize.Y + 2 , 22 , 200)),
 			BackgroundTransparency = 0,
 		})
-		
+
 		InterfaceManagerTable:Tween(UIStroke,TweenInfo.new(0.1),{
 			Transparency = 0.500
 		})
-		
+
 		InterfaceManagerTable:Tween(ScrollingFrame,TweenInfo.new(0.1 ,Enum.EasingStyle.Quint , Enum.EasingDirection.InOut),{
 			Position = UDim2.new(0.5, 0, 0.5, 0)
 		})
-		
+
 		InterfaceManagerTable:Tween(DropShadow,TweenInfo.new(0.5),{
 			ImageTransparency = 0.750
 		})
 	end;
-	
+
 	function args:Hide()
 		args.Enabled = false;
-		
+
 		InterfaceManagerTable:Tween(Dropdown,TweenInfo.new(0.65 , Enum.EasingStyle.Quint),{
 			Size = UDim2.new(0, 50, 0, 0),
 			BackgroundTransparency = 0,
@@ -1661,7 +1661,7 @@ function InterfaceManagerTable:CreateDropdown()
 			ImageTransparency = 1
 		})
 	end;
-	
+
 	function args:CreateButton()
 		local Frame = Instance.new("Frame")
 		local UICorner = Instance.new("UICorner")
@@ -1702,36 +1702,36 @@ function InterfaceManagerTable:CreateDropdown()
 		UIGradient.Offset = Vector2.new(0, 1)
 		UIGradient.Rotation = 90
 		UIGradient.Parent = Frame
-		
+
 		return Frame , TextLabel , UIGradient;
 	end;
-	
+
 	function args:Set(argss , Default , IsMulti , Callback)
 		for i,v in next,ScrollingFrame:GetChildren() do
 			if v:IsA('Frame') then
 				v:Destroy()
 			end;
 		end;
-		
+
 		if IsMulti then
 			local CallbackTable = {};
 			local isarry = false;
-			
+
 			for is , mv in ipairs(Default) do
 				isarry = true;
 				CallbackTable[mv] = true;
 			end;
-			
+
 			if not isarry then
 				CallbackTable = Default
 			end
-			
+
 			for i,v in next,argss do
 				local Frame , TextLabel , UIGradient = args:CreateButton();
-				
+
 				Frame.Parent = ScrollingFrame;
 				TextLabel.Text = tostring(v);
-				
+
 				if Default[v] or table.find(Default , v) then
 					TextLabel.TextTransparency = 0;
 
@@ -1753,12 +1753,12 @@ function InterfaceManagerTable:CreateDropdown()
 						Offset = Vector2.new(0, 1)
 					})
 				end;
-				
+
 				local button = InterfaceManagerTable:InputButton(Frame);
 
 				button.MouseButton1Click:Connect(function()
 					CallbackTable[v] = not CallbackTable[v];
-					
+
 					if CallbackTable[v] then
 						InterfaceManagerTable:Tween(TextLabel , TweenInfo.new(0.2),{
 							TextTransparency = 0;
@@ -1784,23 +1784,23 @@ function InterfaceManagerTable:CreateDropdown()
 							Offset = Vector2.new(0, 1)
 						})
 					end;
-					
+
 					Callback(CallbackTable)
 				end)
 			end;
 		else
 			local OldDB = nil;
-			
+
 			for i,v in next,argss do
 				local Frame , TextLabel , UIGradient = args:CreateButton();
 				Frame.Parent = ScrollingFrame;
 				TextLabel.Text = tostring(v);
-				
+
 				if v == Default then
 					TextLabel.TextTransparency = 0;
-					
+
 					OldDB = {Frame , UIGradient , TextLabel};
-					
+
 					InterfaceManagerTable:Tween(Frame , TweenInfo.new(0.1),{
 						BackgroundColor3 = InterfaceManagerTable.Hightlight
 					})
@@ -1810,25 +1810,25 @@ function InterfaceManagerTable:CreateDropdown()
 					})
 				else
 					TextLabel.TextTransparency = 0.5;
-					
+
 					InterfaceManagerTable:Tween(Frame , TweenInfo.new(0.1),{
 						BackgroundColor3 = Color3.fromRGB(26, 26, 28)
 					})
-					
+
 					InterfaceManagerTable:Tween(UIGradient , TweenInfo.new(0.1),{
 						Offset = Vector2.new(0, 1)
 					})
 				end;
-				
+
 				local button = InterfaceManagerTable:InputButton(Frame);
-				
+
 				button.MouseButton1Click:Connect(function()
-					
+
 					if OldDB then
 						InterfaceManagerTable:Tween(OldDB[3] , TweenInfo.new(0.1),{
 							TextTransparency = 0.5;
 						})
-						
+
 						InterfaceManagerTable:Tween(OldDB[1] , TweenInfo.new(0.1),{
 							BackgroundColor3 = Color3.fromRGB(26, 26, 28)
 						})
@@ -1837,13 +1837,13 @@ function InterfaceManagerTable:CreateDropdown()
 							Offset = Vector2.new(0, 1)
 						})
 					end;
-					
+
 					OldDB = {Frame , UIGradient , TextLabel};
-					
+
 					InterfaceManagerTable:Tween(TextLabel , TweenInfo.new(0.2),{
 						TextTransparency = 0;
 					})
-					
+
 					InterfaceManagerTable:Tween(Frame , TweenInfo.new(0.1),{
 						BackgroundColor3 = InterfaceManagerTable.Hightlight
 					})
@@ -1851,17 +1851,17 @@ function InterfaceManagerTable:CreateDropdown()
 					InterfaceManagerTable:Tween(UIGradient , TweenInfo.new(0.1),{
 						Offset = Vector2.new(0, 0)
 					})
-					
+
 					Callback(v)
 				end)
 			end;
 		end;
 	end;
-	
+
 	function args:SetInternal(frame)
 		args.ParentEnabled = frame
 	end;
-	
+
 	return args;
 end;
 
@@ -1876,16 +1876,16 @@ end;
 function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : BoolValue)
 	local Internal = {};
 	local TweenInfoMain = TweenInfo.new(0.35,Enum.EasingStyle.Quint , Enum.EasingDirection.InOut);
-	
+
 	local function NewElement(call)
 		call(BoolValue.Value)
 		BoolValue:GetPropertyChangedSignal('Value'):Connect(function()
 			call(BoolValue.Value)
 		end)
 	end;
-	
+
 	InterfaceManagerTable:Obfuscate(main_frame);
-	
+
 	function Internal:AddSection(args)
 		args = args or {};
 		args.Title = args.Title or "Section";
@@ -1952,11 +1952,11 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		Line.BorderSizePixel = 0
 		Line.Size = UDim2.new(1, -5, 0, 1)
 		Line.ZIndex = 7
-		
+
 		task.delay(0.5,function()
 			InterfaceManagerTable:Obfuscate(Section);
 		end)
-		
+
 		NewElement(function(value)
 			if value then
 				InterfaceManagerTable:Tween(Section , TweenInfoMain,{
@@ -1967,9 +1967,9 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 					TextStrokeTransparency = 0.900,
 					TextTransparency = 0.100
 				})
-				
 
-				
+
+
 				InterfaceManagerTable:Tween(UIStroke , TweenInfoMain,{
 					Transparency = 0
 				})
@@ -1978,7 +1978,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 					BackgroundTransparency = 1
 				})
 
-	
+
 
 				InterfaceManagerTable:Tween(Title , TweenInfoMain,{
 					TextStrokeTransparency = 1,
@@ -1990,27 +1990,27 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 				})
 			end;
 		end)
-		
+
 		local Update = function()
 			task.wait();
-			
+
 			InterfaceManagerTable:Tween(Section , TweenInfo.new(0.1) , {
 				Size = UDim2.new(1, -4, 0, UIListLayout.AbsoluteContentSize.Y + 3)
 			})
 		end;
-		
+
 		Update();
-		
+
 		UIListLayout:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(Update);
-		
+
 		return InterfaceManagerTable:CreateInstances(Section , BoolValue);
 	end;
-	
+
 	function Internal:AddParagraph(args)
 		args = args or {};
 		args.Title = args.Title or "Content";
 		args.Description = args.Description or nil
-		
+
 		local ParagraphFace = Instance.new("Frame")
 		local UICorner = Instance.new("UICorner")
 		local UIStroke = Instance.new("UIStroke")
@@ -2071,23 +2071,23 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		Description.TextTransparency = 0.400
 		Description.TextXAlignment = Enum.TextXAlignment.Left
 		Description.TextYAlignment = Enum.TextYAlignment.Top
-		
+
 		NewElement(function(value)
 			if value then
 				InterfaceManagerTable:Tween(ParagraphFace , TweenInfoMain,{
 					BackgroundTransparency = 0.500
 				})
-				
+
 				InterfaceManagerTable:Tween(Description , TweenInfoMain,{
 					TextStrokeTransparency = 0.900,
 					TextTransparency = 0.400
 				})
-				
+
 				InterfaceManagerTable:Tween(Content , TweenInfoMain,{
 					TextStrokeTransparency = 0.900,
 					TextTransparency = 0.200
 				})
-				
+
 				InterfaceManagerTable:Tween(UIStroke , TweenInfoMain,{
 					Transparency = 0.5;
 				})
@@ -2111,7 +2111,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 				})
 			end;
 		end)
-		
+
 		local UpdateParagraph = function()
 			if Description.Text:byte() then
 				local GTX = InterfaceManagerTable:GetTextSize(Description.Text , Description.TextSize , Description.Font);
@@ -2129,9 +2129,9 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 				})
 			end;
 		end;
-		
+
 		UpdateParagraph();
-		
+
 		function args:Title(new)
 			Content.Text = tostring(new);
 			UpdateParagraph();
@@ -2145,10 +2145,10 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 			Description.Text = new;
 			UpdateParagraph();
 		end;
-		
+
 		return args;
 	end;
-	
+
 	function Internal:AddDropdown(args)
 		args = args or {};
 		args.Title = args.Title or "Dropdown";
@@ -2156,15 +2156,15 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		args.Values = args.Values or {};
 		args.Default = args.Default or nil;
 		args.Callback = args.Callback or function() end;
-		
+
 		local function isArray(t)
 			for i,v in ipairs(t) do
 				return true
 			end;
-			
+
 			return false
 		end
-		
+
 		local InterfaceFile = function(data)
 			if typeof(data) == 'table' then
 				if isArray(data) then
@@ -2187,10 +2187,10 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 					return table.concat(cach , ' , ')
 				end;
 			end;
-			
+
 			return tostring(data)
 		end;
-		
+
 		local DropdownFace = Instance.new("Frame")
 		local UICorner = Instance.new("UICorner")
 		local UIStroke = Instance.new("UIStroke")
@@ -2271,7 +2271,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		Upvalue.TextSize = 12.000
 		Upvalue.TextTransparency = 0.400
 		Upvalue.TextWrapped = true
-		
+
 		NewElement(function(value)
 			if value then
 				InterfaceManagerTable:Tween(DropdownFace , TweenInfoMain,{
@@ -2311,40 +2311,40 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 				})
 			end;
 		end)
-		
+
 		local uibutton = InterfaceManagerTable:InputButton(DropdownFace);
-		
+
 		local UpdateID = function()
 			local size = InterfaceManagerTable:GetTextSize(Upvalue.Text , Upvalue.TextSize , Upvalue.Font);
-			
+
 			InterfaceManagerTable:Tween(Main,TweenInfo.new(0.1),{
 				Size = UDim2.new(0, math.clamp(size.X + 15 ,65, 450), 0.600000024, 0)
 			})
 		end;
-		
+
 		UpdateID();
-		
+
 		local MMC = function(acv)
 			args.Default = acv;
 			UpdateID();
 			Upvalue.Text = InterfaceFile(args.Default or "NONE")
-			
+
 			task.spawn(function()
 				args.Callback(args.Default)
 			end)
 		end;
-		
-		
+
+
 		uibutton.MouseButton1Click:Connect(function()
 			InterfaceManagerTable:NewRipple(uibutton);
-			
+
 			InterfaceManagerTable.Dropdown:Set(args.Values , args.Default , args.Multiple ,MMC )
-			
+
 			InterfaceManagerTable.Dropdown:SetInternal(Main)
-			
+
 			InterfaceManagerTable.Dropdown:Show()
 		end)
-		
+
 		function args:Title(new)
 			Content.Text = tostring(new);
 		end;
@@ -2355,23 +2355,23 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 
 		function args:SetValue(new)
 			args.Default = new;
-			
+
 			UpdateID();
-			
+
 			Upvalue.Text = InterfaceFile(args.Default or "NONE")
 
 			task.spawn(function()
 				args.Callback(args.Default)
 			end)
 		end;
-		
+
 		function args:SetDefault(new)
 			args.Values = new;
 		end;
-		
+
 		return args;
 	end;
-	
+
 	function Internal:AddTextbox(args)
 		args = args or {};
 		args.Title = args.Title or "Textbox";
@@ -2380,7 +2380,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		args.Numeric = args.Numeric or false;
 		args.Finished = args.Finished or false;
 		args.Callback = args.Callback or function() end;
-		
+
 		local TextboxFace = Instance.new("Frame")
 		local UICorner = Instance.new("UICorner")
 		local UIStroke = Instance.new("UIStroke")
@@ -2457,7 +2457,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 		TextBox.TextSize = 10.000
 		TextBox.TextTransparency = 0.500
-		
+
 		NewElement(function(value)
 			if value then
 				InterfaceManagerTable:Tween(TextboxFace , TweenInfoMain,{
@@ -2497,10 +2497,10 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 				})
 			end;
 		end)
-		
+
 		local PlaceHolder = InterfaceManagerTable:GetTextSize(TextBox.PlaceholderText,TextBox.TextSize,TextBox.Font);
-		
-		
+
+
 		local Update = function()
 
 			local size = InterfaceManagerTable:GetTextSize(TextBox.Text,TextBox.TextSize,TextBox.Font);
@@ -2511,7 +2511,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 				});
 			end)
 		end;
-		
+
 		local UpdateText = function()
 			if args.Numeric then
 				TextBox.Text = string.gsub(TextBox.Text, '[^0-9.]', '')
@@ -2519,26 +2519,26 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 				if not tonumber(TextBox.Text) then
 					return;	
 				end;
-				
+
 				Update();
-				
+
 				args.Callback(tonumber(TextBox.Text) or 0);
 			else
 				Update();
 				args.Callback(TextBox.Text)
 			end;
 		end
-		
+
 		if args.Finished then
 			TextBox.FocusLost:Connect(UpdateText)
 		else
 			TextBox:GetPropertyChangedSignal('Text'):Connect(UpdateText);
 		end;
-		
+
 		TextBox:GetPropertyChangedSignal('Text'):Connect(Update);
-		
+
 		Update()
-		
+
 		function args:Title(new)
 			Content.Text = tostring(new);
 		end;
@@ -2549,27 +2549,27 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 
 		function args:Value(new)
 			TextBox.Text = new
-			
+
 			UpdateText();
 		end;
 
 		return args;
 	end;
-	
+
 	function Internal:AddKeybind(args)
 		args = args or {};
 		args.Title = args.Title or "Keybind";
 		args.Default = args.Default or "NONE";
 		args.Callback = args.Callback or function() end;
-		
+
 		local GetKeyName = function(a)
 			if typeof(a) == 'EnumItem' then
 				return a.Name
 			end;
-			
+
 			return tostring(a)
 		end;
-		
+
 		local KeybindFace = Instance.new("Frame")
 		local UICorner = Instance.new("UICorner")
 		local UIStroke = Instance.new("UIStroke")
@@ -2649,7 +2649,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		Upvalue.TextSize = 14.000
 		Upvalue.TextTransparency = 0.400
 		Upvalue.TextWrapped = true
-		
+
 		NewElement(function(value)
 			if value then
 				InterfaceManagerTable:Tween(KeybindFace , TweenInfoMain,{
@@ -2689,50 +2689,50 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 				})
 			end;
 		end)
-		
+
 		local Manager = InterfaceManagerTable:InputButton(KeybindFace);
 		local IsBind = false;
 		local Update = function(newkey)
 			Upvalue.Text = GetKeyName(newkey or "NONE");
-			
+
 			local xA = InterfaceManagerTable:GetTextSize(Upvalue.Text , Upvalue.TextSize , Upvalue.Font);
-			
+
 			InterfaceManagerTable:Tween(Main,TweenInfo.new(0.1),{
 				Size = UDim2.new(0, xA.X + 10, 0.600000024, 0)
 			})
 		end;
-		
+
 		Manager.Active = false;
-		
+
 		Update((args.Default))
-		
+
 		Manager.MouseButton1Click:Connect(function()
 			if IsBind  then
 				return
 			end
-			
+
 			InterfaceManagerTable:NewRipple(Manager);
-			
+
 			IsBind = true;
 			local Binded = nil;
-			
+
 			Update("...");
-			
+
 			while (not Binded) do
 				local Keybind = InterfaceManagerTable.InputService.InputBegan:Wait();
-				
+
 				if Keybind.KeyCode ~= Enum.KeyCode.Unknown then
 					Binded = Keybind.KeyCode;
 				end;
 			end;
-			
+
 			IsBind = false;
-			
+
 			Update(Binded);
-			
+
 			args.Callback(Binded)
 		end)
-		
+
 		function args:Title(new)
 			Content.Text = tostring(new);
 		end;
@@ -2745,13 +2745,13 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 			args.Default = new;
 
 			Update(args.Default);
-			
+
 			args.Callback(new)
 		end;
 
 		return args
 	end;
-	
+
 	function Internal:AddSlider(args)
 		args = args or {};
 		args.Title = args.Title or "Slider";
@@ -2761,7 +2761,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		args.Max = args.Max or 100;
 		args.Rounding = args.Rounding or 0;
 		args.Type = args.Type or "%";
-		
+
 		local SliderFace = Instance.new("Frame")
 		local UICorner = Instance.new("UICorner")
 		local UIStroke = Instance.new("UIStroke")
@@ -2857,7 +2857,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		Value.TextStrokeTransparency = 0.900
 		Value.TextTransparency = 0.500
 		Value.TextXAlignment = Enum.TextXAlignment.Right
-		
+
 		NewElement(function(value)
 			if value then
 				InterfaceManagerTable:Tween(SliderFace , TweenInfoMain,{
@@ -2868,7 +2868,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 					TextStrokeTransparency = 0.900,
 					TextTransparency = 0.4
 				})
-				
+
 				InterfaceManagerTable:Tween(upvalue , TweenInfoMain,{
 					BackgroundTransparency = 0
 				})
@@ -2883,11 +2883,11 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 					Transparency = 0.5;
 				})
 			else
-				
+
 				InterfaceManagerTable:Tween(upvalue , TweenInfoMain,{
 					BackgroundTransparency = 1
 				})
-				
+
 				InterfaceManagerTable:Tween(SliderFace ,TweenInfoMain,{
 					BackgroundTransparency = 1
 				})
@@ -2907,12 +2907,12 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 				})
 			end;
 		end)
-		
+
 		local function Rounding(num, numDecimalPlaces)
 			local mult = 10^(numDecimalPlaces or 0)
 			return math.floor(num * mult + 0.5) / mult
 		end;
-		
+
 		local IsHold = false;
 
 		InterfaceManagerTable:Tween(upvalue , TweenInfo.new(0.4),{
@@ -2956,7 +2956,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 				end
 			end
 		end)
-		
+
 		function args:Title(new)
 			Content.Text = tostring(new);
 		end;
@@ -2967,16 +2967,16 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 
 		function args:Value(new)
 			args.Default = new;
-			
+
 			InterfaceManagerTable:Tween(upvalue , TweenInfo.new(0.4),{
 				Size = UDim2.new((args.Default - args.Min) / (args.Max - args.Min), 0, 1, 0)
 			});
 			args.Callback(new)
 		end;
-		
+
 		return args
 	end;
-	
+
 	function Internal:AddToggle(args)
 		args = args or {};
 		args.Title = args.Title or "Button";
@@ -3058,7 +3058,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 
 		UICorner_3.CornerRadius = UDim.new(1, 0)
 		UICorner_3.Parent = Block
-		
+
 		NewElement(function(value)
 			if value then
 				InterfaceManagerTable:Tween(ToggleFace , TweenInfoMain,{
@@ -3098,7 +3098,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 				})
 			end;
 		end)
-		
+
 		local ToggleFunc = function(value)
 			if value then
 				InterfaceManagerTable:Tween(Block , TweenInfo.new(0.3),{
@@ -3112,22 +3112,22 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 				})
 			end;
 		end;
-		
+
 		ToggleFunc(args.Default);
-		
+
 		local Manager = InterfaceManagerTable:InputButton(ToggleFace);
 
 		Manager.Active = false;
 
 		Manager.MouseButton1Click:Connect(function()
 			InterfaceManagerTable:NewRipple(Manager);
-			
+
 			args.Default = not args.Default;
 			ToggleFunc(args.Default);
-			
+
 			args.Callback(args.Default)
 		end);
-		
+
 		function args:Title(new)
 			Content.Text = tostring(new);
 		end;
@@ -3135,29 +3135,29 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		function args:Visible(new)
 			ToggleFace.Visible = new;
 		end;
-		
+
 		function args:Value(new)
 			args.Default = new;
 			ToggleFunc(new);
 
 			args.Callback(new)
 		end;
-		
+
 		return args;
 	end;
-	
+
 	function Internal:AddButton(args)
 		args = args or {};
 		args.Title = args.Title or "Button";
 		args.Callback = args.Callback or function() end;
-		
+
 		local ButtonFace = Instance.new("Frame")
 		local UICorner = Instance.new("UICorner")
 		local UIStroke = Instance.new("UIStroke")
 		local Content = Instance.new("TextLabel")
 		local Input = Instance.new("Frame")
 		local Icon = Instance.new("ImageLabel")
-		
+
 		Content.RichText = true;
 
 		ButtonFace.Name = "ButtonFace"
@@ -3219,7 +3219,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		Icon.Image = "rbxassetid://10709791437"
 		Icon.ImageTransparency = 0.500
 		Icon.ScaleType = Enum.ScaleType.Fit
-		
+
 		NewElement(function(value)
 			if value then
 				InterfaceManagerTable:Tween(ButtonFace , TweenInfoMain,{
@@ -3259,66 +3259,66 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 				})
 			end;
 		end)
-		
+
 		ButtonFace.MouseEnter:Connect(function()
 			InterfaceManagerTable:Tween(ButtonFace , TweenInfo.new(0.1) , {
 				BackgroundColor3 = Color3.fromRGB(33, 33, 35)
 			})
 		end)
-		
+
 		ButtonFace.MouseLeave:Connect(function()
 			InterfaceManagerTable:Tween(ButtonFace , TweenInfo.new(0.1) , {
 				BackgroundColor3 = Color3.fromRGB(26, 26, 28)
 			})
 		end)
-			
+
 		local Manager = InterfaceManagerTable:InputButton(ButtonFace);
-		
+
 		Manager.Active = false;
-		
+
 		Manager.MouseButton1Down:Connect(function()
 			InterfaceManagerTable:Tween(Icon , TweenInfo.new(0.1) , {
 				Position = UDim2.new(0.99, 0, 0, 0),
 			})
 		end)
-		
+
 		Manager.MouseButton1Up:Connect(function()
 			InterfaceManagerTable:Tween(Icon , TweenInfo.new(0.1) , {
 				Position = UDim2.new(0.75, 0, 0, 0),
 				Size = UDim2.new(1, 0, 1, 0)
 			})
 		end)
-		
+
 		Manager.MouseButton1Click:Connect(function()
 			InterfaceManagerTable:NewRipple(Manager);
-			
+
 			args.Callback(ButtonFace)
 		end)
-		
+
 		function args:Title(new)
 			Content.Text = tostring(new);
 		end;
-		
+
 		function args:Visible(new)
 			ButtonFace.Visible = new;
 		end;
-		
+
 		return args;
 	end;
-	
+
 	return Internal
 end;
 
 do
 	local Interface = Instance.new("ScreenGui");
-	
+
 	Interface.Name = "Interface"
 	Interface.IgnoreGuiInset = false
 	Interface.ZIndexBehavior = Enum.ZIndexBehavior.Global
 	Interface.ResetOnSpawn = false
 	Interface.Parent = InterfaceManagerTable.CoreGui
 	Interface.Name = "\0";
-	
+
 	InterfaceManagerTable.ScreenGui = Interface;
 end;
 
@@ -3331,7 +3331,7 @@ if not InterfaceManagerTable.Dropdown then
 		end;
 
 		InterfaceManagerTable.Dropdown = Dbindex;
-		
+
 		Dbindex:Hide()
 	end;
 end;
@@ -3342,20 +3342,20 @@ function InterfaceManagerTable.new(args)
 	args.Logo = args.Logo or "http://www.roblox.com/asset/?id=125085241530623";
 	args.Keybind = args.Keybind or Enum.KeyCode.LeftControl;
 	args.Size = args.Size or UDim2.new(0, 580, 0, 365);
-	
+
 	local KNC_Interface = {};
-	
+
 	KNC_Interface.FullScreen = false;
 	KNC_Interface.Toggle = true;
 	KNC_Interface.FirstTab = true;
 	KNC_Interface.Tabs = {};
 	KNC_Interface.TabSelected = nil;
 	KNC_Interface.IsOpenTab = false;
-	
+
 	if InterfaceManagerTable.ScreenGui then
 		InterfaceManagerTable.ScreenGui.Parent = nil;	
 	end;
-	
+
 	local Interface = Instance.new("ScreenGui")
 	local MainFrame = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
@@ -3385,7 +3385,7 @@ function InterfaceManagerTable.new(args)
 	local TMFrame = Instance.new("Frame")
 	local UIGradient = Instance.new("UIGradient")
 	local BlackFrame = Instance.new("Frame")
-	
+
 	Title.RichText = true;
 
 	Interface.Name = "Interface"
@@ -3393,15 +3393,15 @@ function InterfaceManagerTable.new(args)
 	Interface.ZIndexBehavior = Enum.ZIndexBehavior.Global
 	Interface.ResetOnSpawn = false
 	Interface.Parent = InterfaceManagerTable.CoreGui
-	
+
 	if InterfaceManagerTable.ScreenGui then
 		InterfaceManagerTable.ScreenGui.Parent = InterfaceManagerTable.CoreGui;	
 	end;
-	
+
 	task.delay(1,function()
 		InterfaceManagerTable:Obfuscate(Interface);
 	end)
-	
+
 	MainFrame.Name = "MainFrame"
 	MainFrame.Parent = Interface
 	MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -3412,18 +3412,18 @@ function InterfaceManagerTable.new(args)
 	MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 	MainFrame.Size = UDim2.fromOffset(5,5)
 	MainFrame.Active = true
-	
+
 	InterfaceManagerTable:Tween(MainFrame,TweenInfo.new(1.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 		Size = args.Size
 	})
-	
+
 	UICorner.CornerRadius = UDim.new(1,1)
 	UICorner.Parent = MainFrame
-	
+
 	InterfaceManagerTable:Tween(UICorner,TweenInfo.new(1,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 		CornerRadius = UDim.new(0, 4)
 	})
-	
+
 	DropShadow.Name = "DropShadow"
 	DropShadow.Parent = MainFrame
 	DropShadow.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -3438,11 +3438,11 @@ function InterfaceManagerTable.new(args)
 	DropShadow.ImageTransparency = 1
 	DropShadow.ScaleType = Enum.ScaleType.Slice
 	DropShadow.SliceCenter = Rect.new(49, 49, 450, 450)
-	
+
 	InterfaceManagerTable:Tween(DropShadow,TweenInfo.new(2,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 		ImageTransparency = 0.500
 	})
-	
+
 	Headers.Name = "Headers"
 	Headers.Parent = MainFrame
 	Headers.BackgroundColor3 = Color3.fromRGB(38, 38, 44)
@@ -3560,12 +3560,12 @@ function InterfaceManagerTable.new(args)
 	CloseButton.SizeConstraint = Enum.SizeConstraint.RelativeYY
 	CloseButton.ZIndex = 46
 	CloseButton.Image = "rbxassetid://9886659671"
-	
+
 	InterfaceManagerTable:CreateHover(MinButton , 0.5);
 	InterfaceManagerTable:CreateHover(MaxButton , 0.5);
 	InterfaceManagerTable:CreateHover(CloseButton , 0.5);
 
-	
+
 	buttonFrame.Name = "buttonFrame"
 	buttonFrame.Parent = MainFrame
 	buttonFrame.BackgroundColor3 = Color3.fromRGB(31, 31, 36)
@@ -3592,15 +3592,19 @@ function InterfaceManagerTable.new(args)
 	buttonFrameMain.ZIndex = 36
 	buttonFrameMain.ScrollBarThickness = 0
 	buttonFrameMain.ClipsDescendants = true
-	
+
 	UIListLayout_2.Parent = buttonFrameMain
 	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout_2.Padding = UDim.new(0, 9)
+	UIListLayout_2.Padding = UDim.new(0, 100)
+	
+	InterfaceManagerTable:Tween(UIListLayout_2,TweenInfo.new(1,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
+		Padding = UDim.new(0, 9)
+	})
 	
 	UIListLayout_2:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
 		buttonFrameMain.CanvasSize = UDim2.fromOffset(0,UIListLayout_2.AbsoluteContentSize.Y)
 	end)
-	
+
 	Hightlight.Name = "Hightlight"
 	Hightlight.Parent = buttonFrame
 	Hightlight.BackgroundColor3 = InterfaceManagerTable.Hightlight
@@ -3610,7 +3614,7 @@ function InterfaceManagerTable.new(args)
 	Hightlight.Size = UDim2.new(0, 25, 0, 25)
 	Hightlight.ZIndex = 36
 	Hightlight.BackgroundTransparency = 1
-	
+
 	UICorner_4.CornerRadius = UDim.new(0, 3)
 	UICorner_4.Parent = Hightlight
 
@@ -3639,8 +3643,12 @@ function InterfaceManagerTable.new(args)
 	UIListLayout_3.FillDirection = Enum.FillDirection.Horizontal
 	UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout_3.VerticalAlignment = Enum.VerticalAlignment.Center
-	UIListLayout_3.Padding = UDim.new(0, 10)
-
+	UIListLayout_3.Padding = UDim.new(0, 100)
+	
+	InterfaceManagerTable:Tween(UIListLayout_3,TweenInfo.new(1,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
+		Padding = UDim.new(0, 10)
+	})
+	
 	TabButtonOpen.Name = "TabButtonOpen"
 	TabButtonOpen.Parent = InterfaceManager
 	TabButtonOpen.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -3652,9 +3660,9 @@ function InterfaceManagerTable.new(args)
 	TabButtonOpen.ZIndex = 37
 	TabButtonOpen.Image = "rbxassetid://10709791437"
 	TabButtonOpen.ImageTransparency = 0.350
-	
+
 	InterfaceManagerTable:CreateHover(TabButtonOpen , 0.75);
-	
+
 	UICorner_5.CornerRadius = UDim.new(0, 4)
 	UICorner_5.Parent = TabButtonOpen
 
@@ -3678,41 +3686,41 @@ function InterfaceManagerTable.new(args)
 	BlackFrame.Size = UDim2.new(1, 0, 1, 0)
 	BlackFrame.Visible = false
 	BlackFrame.ZIndex = 34
-	
+
 	TabButtonOpen.MouseButton1Click:Connect(function()
 		KNC_Interface.IsOpenTab = not KNC_Interface.IsOpenTab;
-		
+
 		if KNC_Interface.IsOpenTab then
 			InterfaceManagerTable:Tween(buttonFrame , TweenInfo.new(0.12) ,{
 				Size = UDim2.new(0, 135, 1, 0)
 			})
-			
+
 			InterfaceManagerTable:Tween(BlackFrame , TweenInfo.new(0.12) ,{
 				BackgroundTransparency = 0.7
 			})
-			
+
 			InterfaceManagerTable:Tween(TabButtonOpen , TweenInfo.new(0.12) ,{
 				Rotation = 180
 			})
-			
+
 			buttonFrameMain.ScrollBarThickness = 1
 		else
-			
+
 			buttonFrameMain.ScrollBarThickness = 0
 			InterfaceManagerTable:Tween(BlackFrame , TweenInfo.new(0.12) ,{
 				BackgroundTransparency = 1
 			})
-			
+
 			InterfaceManagerTable:Tween(TabButtonOpen , TweenInfo.new(0.12) ,{
 				Rotation = 0
 			})
-			
+
 			InterfaceManagerTable:Tween(buttonFrame , TweenInfo.new(0.12) ,{
 				Size = UDim2.new(0, 35, 1, 0)
 			})
 		end;
 	end)
-	
+
 	function KNC_Interface:Authorize(argsIndex)
 		argsIndex = argsIndex or {};
 		argsIndex.Title = argsIndex.Title or "Key System";
@@ -3721,13 +3729,14 @@ function InterfaceManagerTable.new(args)
 		argsIndex.ClickLabel = argsIndex.ClickLabel or "Get Key";
 		argsIndex.LoginLabel = argsIndex.LoginLabel or "Login";
 		argsIndex.Placeholder = argsIndex.Placeholder or "Enter Key";
+		KNC_Interface.Busy = true
 		
 		InterfaceManagerTable:Tween(MainFrame,TweenInfo.new(1.25,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			Size = UDim2.fromOffset(300,150)
 		})
-		
+
 		KNC_Interface:SetHide();
-		
+
 		local old_UICorner = UICorner;
 		local Authorize = Instance.new("Frame")
 		local Title = Instance.new("TextLabel")
@@ -3744,7 +3753,7 @@ function InterfaceManagerTable.new(args)
 		local UIStroke_3 = Instance.new("UIStroke")
 		local Text_2 = Instance.new("TextLabel")
 		local event = Instance.new('BindableEvent');
-		
+
 		Authorize.Name = "Authorize"
 		Authorize.Parent = MainFrame
 		Authorize.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -3756,11 +3765,11 @@ function InterfaceManagerTable.new(args)
 		Authorize.Size = UDim2.new(0.5,0,0.5,0)
 		Authorize.ClipsDescendants = true
 		Authorize.ZIndex = 4
-		
+
 		InterfaceManagerTable:Tween(Authorize,TweenInfo.new(1.75,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			Size = UDim2.new(1, 0, 1, 0)
 		})
-		
+
 		Title.Name = "Title"
 		Title.Parent = Authorize
 		Title.AnchorPoint = Vector2.new(0.5, 0)
@@ -3785,7 +3794,7 @@ function InterfaceManagerTable.new(args)
 			TextStrokeTransparency = 0.900,
 			Position = UDim2.new(0.5, 0, 0, 5)
 		})
-		
+
 		Line.Name = "Line"
 		Line.Parent = Authorize
 		Line.AnchorPoint = Vector2.new(0.5, 0)
@@ -3795,11 +3804,11 @@ function InterfaceManagerTable.new(args)
 		Line.Position = UDim2.new(0.5, 0, 0, 25)
 		Line.Size = UDim2.new(1, -5, 0, 1)
 		Line.ZIndex = 7
-		
+
 		InterfaceManagerTable:Tween(Line,TweenInfo.new(2.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			BackgroundTransparency = 0
 		})
-		
+
 		TextBox.Parent = Authorize
 		TextBox.AnchorPoint = Vector2.new(0.5, 0)
 		TextBox.BackgroundColor3 = Color3.fromRGB(18, 18, 21)
@@ -3816,12 +3825,12 @@ function InterfaceManagerTable.new(args)
 		TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 		TextBox.TextSize = 10.000
 		TextBox.TextTransparency = 1
-		
+
 		InterfaceManagerTable:Tween(TextBox,TweenInfo.new(2.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			TextTransparency = 0.400,
 			Position = UDim2.new(0.5, 0, 0, 45)
 		})
-		
+
 		UICorner.CornerRadius = UDim.new(0, 4)
 		UICorner.Parent = TextBox
 
@@ -3837,12 +3846,12 @@ function InterfaceManagerTable.new(args)
 		ClickFrame.Position = UDim2.new(0.25, 0, 0.8, 0)
 		ClickFrame.Size = UDim2.new(0, 111, 0, 30)
 		ClickFrame.BackgroundTransparency = 1;
-		
+
 		InterfaceManagerTable:Tween(ClickFrame,TweenInfo.new(2.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			BackgroundTransparency = 0,
 			Position = UDim2.new(0.25, 0, 0.649999976, 0)
 		})
-		
+
 		UICorner_2.CornerRadius = UDim.new(0, 4)
 		UICorner_2.Parent = ClickFrame
 
@@ -3874,12 +3883,12 @@ function InterfaceManagerTable.new(args)
 		LoginFrame.Position = UDim2.new(0.75, 0, 0.8, 0)
 		LoginFrame.Size = UDim2.new(0, 111, 0, 30)
 		LoginFrame.BackgroundTransparency = 1
-		
+
 		InterfaceManagerTable:Tween(LoginFrame,TweenInfo.new(2.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			BackgroundTransparency = 0,
 			Position = UDim2.new(0.75, 0, 0.649999976, 0)
 		})
-		
+
 		UICorner_3.CornerRadius = UDim.new(0, 4)
 		UICorner_3.Parent = LoginFrame
 
@@ -3907,13 +3916,13 @@ function InterfaceManagerTable.new(args)
 				Color = Color3.fromRGB(29, 29, 29)
 			})
 		end)
-		
+
 		LoginFrame.MouseEnter:Connect(function()
 			InterfaceManagerTable:Tween(UIStroke_3,TweenInfo.new(0.1),{
 				Color = Color3.fromRGB(33, 33, 33)
 			})
 		end)
-		
+
 		ClickFrame.MouseLeave:Connect(function()
 			InterfaceManagerTable:Tween(UIStroke_2,TweenInfo.new(0.1),{
 				Color = Color3.fromRGB(29, 29, 29)
@@ -3925,21 +3934,21 @@ function InterfaceManagerTable.new(args)
 				Color = Color3.fromRGB(33, 33, 33)
 			})
 		end)
-		
+
 		local InputLogin = InterfaceManagerTable:InputButton(LoginFrame);
 		local InputClick = InterfaceManagerTable:InputButton(ClickFrame);
 
 		InputLogin.Modal = true;
-		
+
 		InputLogin.MouseButton1Click:Connect(function()
 			if argsIndex.Auth then
 				return;
 			end;
-			
+
 			InterfaceManagerTable:Tween(MainFrame,TweenInfo.new(0.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				Size = UDim2.fromOffset(100,100)
 			})
-			
+
 			InterfaceManagerTable:Tween(LoginFrame,TweenInfo.new(0.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				BackgroundTransparency = 0,
 				Position = UDim2.new(0.9, 0, 1.4, 0)
@@ -3949,80 +3958,80 @@ function InterfaceManagerTable.new(args)
 				BackgroundTransparency = 0,
 				Position = UDim2.new(0.1, 0, 1.4, 0)
 			})
-			
+
 			InterfaceManagerTable:Tween(TextBox,TweenInfo.new(0.45,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				Position = UDim2.new(0.5, 0, 0, 150)
 			})
-			
+
 			InterfaceManagerTable:Tween(old_UICorner,TweenInfo.new(0.75,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				CornerRadius = UDim.new(1,0)
 			})
-			
+
 			InterfaceManagerTable:Tween(DropShadow,TweenInfo.new(0.55,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				ImageTransparency = 1
 			})
-			
+
 			InterfaceManagerTable:Tween(Line,TweenInfo.new(0.75,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				BackgroundTransparency = 1
 			})
-			
+
 			InterfaceManagerTable:Tween(Title,TweenInfo.new(0.65,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				Position = UDim2.new(0.5, 0, 0, 40)
 			})
-			
+
 			argsIndex.Auth = true;
-			
+
 			if argsIndex.OnLogin(TextBox.Text) then
 				event:Fire();
 				return
 			end;
-			
+
 			TextBox.Text = "";
-			
+
 			argsIndex.Auth = false;
-			
+
 			InterfaceManagerTable:Tween(Title,TweenInfo.new(0.65,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				TextTransparency = 0,
 				TextStrokeTransparency = 0.900,
 				Position = UDim2.new(0.5, 0, 0, 5)
 			})
-			
+
 			InterfaceManagerTable:Tween(Line,TweenInfo.new(0.75,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				BackgroundTransparency = 0
 			})
-			
+
 			InterfaceManagerTable:Tween(DropShadow,TweenInfo.new(0.55,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				ImageTransparency = 0.5
 			})
-			
+
 			InterfaceManagerTable:Tween(old_UICorner,TweenInfo.new(0.75,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				CornerRadius = UDim.new(0,4)
 			})
-			
+
 			InterfaceManagerTable:Tween(TextBox,TweenInfo.new(0.45,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				TextTransparency = 0.400,
 				Position = UDim2.new(0.5, 0, 0, 45)
 			})
-			
+
 			InterfaceManagerTable:Tween(LoginFrame,TweenInfo.new(0.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				BackgroundTransparency = 0,
 				Position = UDim2.new(0.75, 0, 0.649999976, 0)
 			})
-			
+
 			InterfaceManagerTable:Tween(ClickFrame,TweenInfo.new(0.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				BackgroundTransparency = 0,
 				Position = UDim2.new(0.25, 0, 0.649999976, 0)
 			})
-			
+
 			InterfaceManagerTable:Tween(MainFrame,TweenInfo.new(0.75,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				Size = UDim2.fromOffset(300,150)
 			})
 		end)
-		
+
 		InputClick.MouseButton1Click:Connect(function()
 			argsIndex.OnClick()
 		end)
-		
+
 		do
 			local UIStroke = Instance.new("UIStroke")
 			local UIGradient = Instance.new("UIGradient")
@@ -4034,7 +4043,7 @@ function InterfaceManagerTable.new(args)
 			UIGradient.Rotation = 180
 			UIGradient.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
 			UIGradient.Parent = UIStroke
-			
+
 			local Thread = task.spawn(function()
 				while true do task.wait()
 					if argsIndex.Auth then
@@ -4046,25 +4055,27 @@ function InterfaceManagerTable.new(args)
 							Transparency = 1;
 						})
 					end;
-					
+
 					UIGradient.Rotation = UIGradient.Rotation + 4;
 				end;
 			end);
-			
+
 			event.Event:Wait();
-			
+
 			task.delay(1,function()
 				task.cancel(Thread);
 				task.wait(0.2)
 				InterfaceManagerTable:Tween(UIStroke,TweenInfo.new(0.5),{
 					Transparency = 1;
 				})
-				
+
 				task.delay(0.5,function()
 					UIStroke:Destroy()
 				end)
 			end)
 		end;
+		
+		KNC_Interface.Busy = false
 
 		InterfaceManagerTable:Tween(LoginFrame,TweenInfo.new(0.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			BackgroundTransparency = 0,
@@ -4089,79 +4100,78 @@ function InterfaceManagerTable.new(args)
 		InterfaceManagerTable:Tween(TextBox,TweenInfo.new(0.45,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			Position = UDim2.new(0.5, 0, 0, 150)
 		})
-		
+
 		InterfaceManagerTable:Tween(MainFrame,TweenInfo.new(1.25,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			Size = args.Size
 		})
-		
+
 		task.delay(0.65,function()
 			Authorize:Destroy()
 		end)
-		
+
 		task.delay(0.8,function()
 			KNC_Interface:SetDefault()
 		end)
 	end;
-	
+
 	function KNC_Interface:SetHide()
 		KNC_Interface.Ready = false;
-		
-		InterfaceManagerTable:Tween(buttonFrame,TweenInfo.new(0.6),{
+
+		InterfaceManagerTable:Tween(buttonFrame,TweenInfo.new(0.6,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			Position = UDim2.fromOffset(-50,0)
 		})
 
-		InterfaceManagerTable:Tween(Headers,TweenInfo.new(0.6),{
+		InterfaceManagerTable:Tween(Headers,TweenInfo.new(0.6,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			Position = UDim2.fromOffset(0,-30)
 		})
-		
 
-		InterfaceManagerTable:Tween(TMFrame,TweenInfo.new(0.6),{
+		InterfaceManagerTable:Tween(TMFrame,TweenInfo.new(0.45,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			Position = UDim2.new(1, 37, 0, 27)
 		})
 	end;
-	
+
 	function KNC_Interface:SetDefault()
 		KNC_Interface.Ready = true;
-		
+
 		InterfaceManagerTable:Tween(DropShadow,TweenInfo.new(0.55,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			ImageTransparency = 0.5
 		})
-		
-		InterfaceManagerTable:Tween(UICorner,TweenInfo.new(0.3),{
+
+		InterfaceManagerTable:Tween(UICorner,TweenInfo.new(0.3,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			CornerRadius = UDim.new(0,3)
 		})
-		
-		InterfaceManagerTable:Tween(buttonFrame,TweenInfo.new(0.6),{
+
+		InterfaceManagerTable:Tween(buttonFrame,TweenInfo.new(0.6,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			Position = UDim2.fromScale(0,0)
 		})
-		
-		InterfaceManagerTable:Tween(Headers,TweenInfo.new(0.6),{
+
+		InterfaceManagerTable:Tween(Headers,TweenInfo.new(0.6,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			Position = UDim2.fromScale(0,0)
 		})
-		
-		InterfaceManagerTable:Tween(TMFrame,TweenInfo.new(0.6),{
+
+		InterfaceManagerTable:Tween(TMFrame,TweenInfo.new(0.55,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			Position = UDim2.new(0, 37, 0, 27)
 		})
 	end;
-	
+
 	KNC_Interface:SetDefault();
-	
+
 	function KNC_Interface:AddTab(args)
 		args = args or {};
 		args.Title = args.Title or "Tab";
 		args.Icon = args.Icon or "home";
 		args.Type = args.Type or "Multiple";
-		
+
 		local KNC_Tab = {};
-		
+
 		local TabInput = Instance.new("Frame")
 		local Icon = Instance.new("ImageLabel")
 		local TextLabel = Instance.new("TextLabel")
 		local TabFrame = Instance.new("Frame");
 		local EventSlide = Instance.new('BoolValue',TabInput);
-		
+
 		EventSlide.Name = 'Enabled';
-		
+
 		TabInput.Name = "TabInput"
 		TabInput.Parent = buttonFrameMain
 		TabInput.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -4201,35 +4211,35 @@ function InterfaceManagerTable.new(args)
 		TextLabel.TextWrapped = true
 		TextLabel.TextXAlignment = Enum.TextXAlignment.Left
 		TextLabel.RichText = true;
-		
+
 		local CallFunction = function(value)
-			
+
 			EventSlide.Value = value;
-			
+
 			if value then
 				InterfaceManagerTable:Tween(Icon , TweenInfo.new(0.1) , {
 					ImageTransparency = 0,
 				})
-				
+
 				InterfaceManagerTable:Tween(TextLabel , TweenInfo.new(0.1) , {
 					TextTransparency = 0.150
 				})
-				
+
 				InterfaceManagerTable:Tween(TabFrame , TweenInfo.new(0.35 , Enum.EasingStyle.Quint) , {
 					Position = UDim2.fromScale(0.5,0.5),
 					Size = UDim2.fromScale(1,1)
 				})
 
-				
+
 				TabFrame.Visible = true
 			else
 				TabFrame.Visible = false
-				
+
 				InterfaceManagerTable:Tween(TabFrame , TweenInfo.new(0.35, Enum.EasingStyle.Quint) , {
 					Position = UDim2.fromScale(0.5,0.6),
 					Size = UDim2.new(1,-11,1,-11)
 				})
-				
+
 				InterfaceManagerTable:Tween(Icon , TweenInfo.new(0.1) , {
 					ImageTransparency = 0.4,
 				})
@@ -4239,7 +4249,7 @@ function InterfaceManagerTable.new(args)
 				})
 			end;
 		end;
-		
+
 		TabFrame.Name = "TabFrame"
 		TabFrame.Parent = TMFrame
 		TabFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -4250,7 +4260,7 @@ function InterfaceManagerTable.new(args)
 		TabFrame.ZIndex = 3
 		TabFrame.AnchorPoint = Vector2.new(0.5,0.5)
 		TabFrame.Position = UDim2.fromScale(0.5,0.5)
-		
+
 		if args.Type == "Single" then
 			local Center = Instance.new("ScrollingFrame")
 			local UIListLayout = Instance.new("UIListLayout")
@@ -4273,7 +4283,11 @@ function InterfaceManagerTable.new(args)
 			UIListLayout.Parent = Center
 			UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 			UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-			UIListLayout.Padding = UDim.new(0, 5)
+			UIListLayout.Padding = UDim.new(0, 500)
+			
+			InterfaceManagerTable:Tween(UIListLayout,TweenInfo.new(2,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
+				Padding = UDim.new(0, 5)
+			})
 			
 			UIListLayout:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
 				Center.CanvasSize = UDim2.fromOffset(0,UIListLayout.AbsoluteContentSize.Y)
@@ -4305,12 +4319,12 @@ function InterfaceManagerTable.new(args)
 			UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 			UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 			UIListLayout.Padding = UDim.new(0, 5)
-			
+
 			UIListLayout:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
 				Left.CanvasSize = UDim2.fromOffset(0,UIListLayout.AbsoluteContentSize.Y)
 			end)
-			
-			
+
+
 			Right.Name = "Right"
 			Right.Parent = TabFrame
 			Right.Active = true
@@ -4329,31 +4343,31 @@ function InterfaceManagerTable.new(args)
 			UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
 			UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
 			UIListLayout_2.Padding = UDim.new(0, 5)
-			
+
 			UIListLayout_2:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
 				Right.CanvasSize = UDim2.fromOffset(0,UIListLayout_2.AbsoluteContentSize.Y)
 			end)
-			
+
 			KNC_Tab.Left = InterfaceManagerTable:CreateInstances(Left , EventSlide);
 			KNC_Tab.Right = InterfaceManagerTable:CreateInstances(Right , EventSlide);
 		end;
-		
+
 		KNC_Interface.Tabs[TabInput] = CallFunction;
-		
+
 		CallFunction(KNC_Interface.FirstTab)
-		
+
 		if KNC_Interface.FirstTab then
 			KNC_Interface.FirstTab = false;
 			KNC_Interface.TabSelected = TabInput;
 		end;
-			
+
 		local Input = InterfaceManagerTable:InputButton(TabInput);
-		
+
 		Input.ZIndex = 199
-		
+
 		Input.MouseButton1Click:Connect(function()
 			KNC_Interface.TabSelected = TabInput;
-			
+
 			for i,v in next , KNC_Interface.Tabs do
 				if i == TabInput then
 					v(true)
@@ -4362,7 +4376,7 @@ function InterfaceManagerTable.new(args)
 				end;
 			end;
 		end)
-		
+
 		function KNC_Tab:Select()
 			KNC_Interface.TabSelected = TabInput;
 
@@ -4374,10 +4388,10 @@ function InterfaceManagerTable.new(args)
 				end;
 			end;
 		end;
-		
+
 		return KNC_Tab;
 	end;
-	
+
 	local function ScreenCheck()
 		local screenSize = Interface.AbsoluteSize
 		local elementPosition = (KNC_Interface.SavedPosition and Vector2.new(KNC_Interface.SavedPosition.X.Offset,KNC_Interface.SavedPosition.Y.Offset)) or MainFrame.AbsolutePosition
@@ -4388,7 +4402,7 @@ function InterfaceManagerTable.new(args)
 
 		return isOutX or isOutY
 	end
-	
+
 	local UpdateScreen = function()
 		if KNC_Interface.Toggle then
 			if KNC_Interface.FullScreen then
@@ -4397,55 +4411,69 @@ function InterfaceManagerTable.new(args)
 					Size = UDim2.fromScale(1,1)
 				})
 			else
-				
+
 				if KNC_Interface.SavedPosition and ScreenCheck() then
 					KNC_Interface.SavedPosition = nil
 				end;
-				
+
 				InterfaceManagerTable:Tween(MainFrame , TweenInfo.new(0.65 , Enum.EasingStyle.Quint ),{
 					Position = KNC_Interface.SavedPosition or UDim2.fromScale(0.5,0.5),
 					Size = args.Size
 				})
 			end;
-			
+
 			KNC_Interface:SetDefault();
 		else
-			
+
 			KNC_Interface:SetHide();
-			
+
 			local InterfaceSize = InterfaceManagerTable:GetTextSize(Title.Text , Title.TextSize , Title.Font)
-			
+
 			InterfaceManagerTable:Tween(MainFrame,TweenInfo.new(0.75, Enum.EasingStyle.Quint),{
 				Size = UDim2.fromOffset(InterfaceSize.X + 100,25),
 				Position = UDim2.fromOffset(MainFrame.AbsolutePosition.X + (MainFrame.AbsoluteSize.X / 2),MainFrame.AbsolutePosition.Y)
 			})
-			
+
 			InterfaceManagerTable:Tween(Headers,TweenInfo.new(0.5, Enum.EasingStyle.Quint),{
 				Position = UDim2.fromOffset(0,0),
 			})
 		end;
 	end;
-	
+
 	MaxButton.MouseButton1Click:Connect(function()
 		if not 	KNC_Interface.Toggle then
 			return;
 		end;
-		
+
 		KNC_Interface.FullScreen = not KNC_Interface.FullScreen;
-		
+
 		UpdateScreen()
 	end)
-	
+
 	MinButton.MouseButton1Click:Connect(function()
 		KNC_Interface.Toggle = not KNC_Interface.Toggle;
-		
+
 		UpdateScreen()
-		
+
 		if KNC_Interface.Toggle then
 			InterfaceManagerTable:Tween(MainFrame,TweenInfo.new(0.65, Enum.EasingStyle.Quint),{
 				Position = UDim2.fromScale(0.5,0.5),
 			})
 		end
+	end)
+	
+	game:GetService('UserInputService').InputBegan:Connect(function(a,f)
+		if not f and a.KeyCode == args.Keybind and not KNC_Interface.Busy then
+			KNC_Interface.Toggle = not KNC_Interface.Toggle;
+
+			UpdateScreen()
+
+			if KNC_Interface.Toggle then
+				InterfaceManagerTable:Tween(MainFrame,TweenInfo.new(0.65, Enum.EasingStyle.Quint),{
+					Position = UDim2.fromScale(0.5,0.5),
+				})
+			end;
+		end;
 	end)
 
 	task.spawn(function()
@@ -4462,17 +4490,17 @@ function InterfaceManagerTable.new(args)
 						Size = UDim2.new(0, 130, 0, 30)
 					})
 				end;
-				
+
 				InterfaceManagerTable:Tween(ImageLabel , TweenInfo.new(0.2),{
 					ImageTransparency = 0.6
 				})
-				
+
 				local Selected = KNC_Interface.Tabs[KNC_Interface.TabSelected];
 				if Selected then
 					local SelectedFrame : Frame = KNC_Interface.TabSelected;
 					local X = SelectedFrame.AbsolutePosition.X - buttonFrame.AbsolutePosition.X;
 					local Y = SelectedFrame.AbsolutePosition.Y - (buttonFrame.AbsolutePosition.Y + 3);
-					
+
 					InterfaceManagerTable:Tween(Hightlight , TweenInfo.new(0.1 , Enum.EasingStyle.Quint),{
 						Position = UDim2.fromOffset(math.round(X) , math.round(Y))
 					})
@@ -4482,12 +4510,12 @@ function InterfaceManagerTable.new(args)
 					BackgroundTransparency = 1,
 					Size = UDim2.new(0, 20, 0, 20)
 				})
-				
+
 				InterfaceManagerTable:Tween(ImageLabel , TweenInfo.new(0.2),{
 					ImageTransparency = 1
 				})
 			end;
-			
+
 			if BlackFrame.BackgroundTransparency >= 0.99 then
 				BlackFrame.Visible = false
 			else
@@ -4495,7 +4523,7 @@ function InterfaceManagerTable.new(args)
 			end
 		end;
 	end);
-	
+
 	local dragToggle = nil
 	local dragSpeed = 0.2
 	local dragStart = nil
@@ -4505,18 +4533,18 @@ function InterfaceManagerTable.new(args)
 		local delta = input.Position - dragStart
 		local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
 			startPos.Y.Scale, startPos.Y.Offset + delta.Y);
-		
+
 		if KNC_Interface.FullScreen and KNC_Interface.Toggle then
 			InterfaceManagerTable:Tween(MainFrame , TweenInfo.new(0.4 , Enum.EasingStyle.Quint ),{
 				Position = KNC_Interface.SavedPosition or UDim2.fromScale(0.5,0.5),
 				Size = args.Size
 			});
-			
+
 			KNC_Interface.FullScreen = false;
 		end;
-		
+
 		KNC_Interface.SavedPosition = position;
-		
+
 		game:GetService('TweenService'):Create(MainFrame, TweenInfo.new(dragSpeed), {Position = position}):Play()
 	end
 
@@ -4532,7 +4560,7 @@ function InterfaceManagerTable.new(args)
 			end);
 		end;
 	end);
-	
+
 	do
 		local Resize = Instance.new("TextButton")
 		local IsHold = false;
@@ -4553,7 +4581,7 @@ function InterfaceManagerTable.new(args)
 		Resize.Text = ""
 		Resize.TextColor3 = Color3.fromRGB(0, 0, 0)
 		Resize.TextSize = 14.000
-		
+
 		Resize.InputBegan:Connect(function(std)
 			if std.UserInputType == Enum.UserInputType.MouseButton1 or std.UserInputType == Enum.UserInputType.Touch then
 				KNC_Interface.HoldResize = true
@@ -4570,12 +4598,12 @@ function InterfaceManagerTable.new(args)
 			end
 		end)
 	end
-	
+
 	InterfaceManagerTable.InputService.InputChanged:Connect(function(input)
 		if KNC_Interface.HoldResize and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
 			if KNC_Interface.Toggle and not KNC_Interface.FullScreen and KNC_Interface.Ready then
 				local pios = input.Position;
-				
+
 				local x = (pios.X - MainFrame.AbsolutePosition.X) 
 				local y = (pios.Y - MainFrame.AbsolutePosition.Y) 
 
@@ -4586,7 +4614,7 @@ function InterfaceManagerTable.new(args)
 				local plus = UDim2.fromOffset(-(MainFrame.AbsoluteSize.X - x) / 2, -(MainFrame.AbsoluteSize.Y - y) / 2);
 
 				args.Size = Offset
-				
+
 				InterfaceManagerTable:Tween(MainFrame , TweenInfo.new(0.1),{
 					Size = Offset,
 					Position = MainFrame.Position + plus,
@@ -4595,15 +4623,15 @@ function InterfaceManagerTable.new(args)
 				KNC_Interface.SavedPosition = MainFrame.Position + plus
 			end
 		end;
-		
-		
+
+
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			if dragToggle then
 				updateInput(input)
 			end
 		end
 	end)
-	
+
 	return KNC_Interface;
 end;
 
@@ -4626,14 +4654,14 @@ function InterfaceManagerTable:Notifier()
 	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Bottom
 	UIListLayout.Padding = UDim.new(0,5);
-	
+
 	return {
 		new = function(args)
 			args = args or {};
 			args.Title = args.Title or "Notification";
 			args.Description = args.Description or nil;
 			args.Duration = args.Duration or 5;
-			
+
 			local Notify = Instance.new("Frame")
 			local DropShadow = Instance.new("ImageLabel")
 			local UICorner = Instance.new("UICorner")
@@ -4648,7 +4676,7 @@ function InterfaceManagerTable:Notifier()
 			Notify.BorderSizePixel = 0
 			Notify.Size = UDim2.new(0, 0, 0, 0)
 			Notify.ClipsDescendants = true
-			
+
 			DropShadow.Name = "DropShadow"
 			DropShadow.Parent = Notify
 			DropShadow.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -4668,7 +4696,7 @@ function InterfaceManagerTable:Notifier()
 			InterfaceManagerTable:Tween(DropShadow,TweenInfo.new(0.5),{
 				ImageTransparency = 0.500
 			})
-			
+
 			UICorner.CornerRadius = UDim.new(0, 4)
 			UICorner.Parent = Notify
 
@@ -4691,7 +4719,7 @@ function InterfaceManagerTable:Notifier()
 			Title.TextStrokeTransparency = 0.900
 			Title.TextXAlignment = Enum.TextXAlignment.Left
 			Title.RichText = true
-			
+
 			if args.Description then
 				Description.Name = "Description"
 				Description.Parent = Notify
@@ -4714,14 +4742,14 @@ function InterfaceManagerTable:Notifier()
 			else
 				Description.Text = '';
 			end;
-			
+
 			local update = function()
 				local size1 = InterfaceManagerTable:GetTextSize(Title.Text,Title.TextSize,Title.Font);
 				local size2 = InterfaceManagerTable:GetTextSize(Description.Text,Description.TextSize,Description.Font);
 
 				if args.Description then
 					local bt = ((size1.X > size2.X) and size1.X) or size2.X;
-					
+
 					InterfaceManagerTable:Tween(Notify,TweenInfo.new(0.3,Enum.EasingStyle.Quint),{
 						Size = UDim2.new(0, bt + 45, 0, size1.Y + size2.Y + 10)
 					})
@@ -4731,35 +4759,35 @@ function InterfaceManagerTable:Notifier()
 					})
 				end;
 			end;
-			
+
 			local destroy = function()
 				InterfaceManagerTable:Tween(Notify,TweenInfo.new(0.8,Enum.EasingStyle.Quint),{
 					Size = UDim2.new(0, 0 , 0 ,0)
 				})
-				
+
 				InterfaceManagerTable:Tween(DropShadow,TweenInfo.new(0.5),{
 					ImageTransparency = 1
 				})
-				
+
 				task.delay(0.5,function()
 					InterfaceManagerTable:Tween(Notify,TweenInfo.new(0.4,Enum.EasingStyle.Quint),{
 						BackgroundTransparency = 1
 					})
-					
+
 					InterfaceManagerTable:Tween(UIStroke,TweenInfo.new(0.4,Enum.EasingStyle.Quint),{
 						Transparency = 1
 					})
 				end)
-				
+
 				task.delay(0.85,function()
 					Notify:Destroy()
 				end)
 			end;
-			
+
 			update();
-			
+
 			task.delay(args.Duration,destroy)
-			
+
 			return {
 				Destroy = destroy,
 			}
