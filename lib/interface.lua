@@ -1905,7 +1905,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		Section.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Section.BorderSizePixel = 0
 		Section.ClipsDescendants = true
-		Section.Size = UDim2.new(1, -7, 0, 290)
+		Section.Size = UDim2.new(1, -2, 0, 0)
 		Section.ZIndex = 7
 
 		UICorner.CornerRadius = UDim.new(0, 3)
@@ -1995,7 +1995,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 			task.wait();
 			
 			InterfaceManagerTable:Tween(Section , TweenInfo.new(0.1) , {
-				Size = UDim2.new(1, -7, 0, UIListLayout.AbsoluteContentSize.Y + 3)
+				Size = UDim2.new(1, -4, 0, UIListLayout.AbsoluteContentSize.Y + 3)
 			})
 		end;
 		
@@ -2009,7 +2009,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 	function Internal:AddParagraph(args)
 		args = args or {};
 		args.Title = args.Title or "Content";
-		args.Description = args.Description or "Description"
+		args.Description = args.Description or nil
 		
 		local ParagraphFace = Instance.new("Frame")
 		local UICorner = Instance.new("UICorner")
@@ -2064,7 +2064,7 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		Description.Size = UDim2.new(1, -10, 0, 10)
 		Description.ZIndex = 8
 		Description.Font = Enum.Font.GothamMedium
-		Description.Text = args.Description
+		Description.Text = args.Description or "";
 		Description.TextColor3 = Color3.fromRGB(255, 255, 255)
 		Description.TextSize = 13.000
 		Description.TextStrokeTransparency = 0.900
@@ -2113,15 +2113,21 @@ function InterfaceManagerTable:CreateInstances(main_frame : Frame , BoolValue : 
 		end)
 		
 		local UpdateParagraph = function()
-			local GTX = InterfaceManagerTable:GetTextSize(Description.Text , Description.TextSize , Description.Font);
-			
-			InterfaceManagerTable:Tween(ParagraphFace , TweenInfo.new(0.1),{
-				Size = UDim2.new(1, -5, 0, GTX.Y + Content.Size.Y.Offset + 2)
-			})
-			
-			InterfaceManagerTable:Tween(Description , TweenInfo.new(0.1),{
-				Size = UDim2.new(1, -10, 0, GTX.Y)
-			})
+			if Description.Text:byte() then
+				local GTX = InterfaceManagerTable:GetTextSize(Description.Text , Description.TextSize , Description.Font);
+
+				InterfaceManagerTable:Tween(ParagraphFace , TweenInfo.new(0.1),{
+					Size = UDim2.new(1, -5, 0, GTX.Y + Content.Size.Y.Offset + 13)
+				})
+
+				InterfaceManagerTable:Tween(Description , TweenInfo.new(0.1),{
+					Size = UDim2.new(1, -10, 0, GTX.Y)
+				})
+			else
+				InterfaceManagerTable:Tween(ParagraphFace , TweenInfo.new(0.1),{
+					Size = UDim2.new(1, -5, 0, 18)
+				})
+			end;
 		end;
 		
 		UpdateParagraph();
@@ -3399,7 +3405,7 @@ function InterfaceManagerTable.new(args)
 	MainFrame.Name = "MainFrame"
 	MainFrame.Parent = Interface
 	MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-	MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 29)
+	MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
 	MainFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	MainFrame.BorderSizePixel = 0
 	MainFrame.ClipsDescendants = true
@@ -3585,7 +3591,8 @@ function InterfaceManagerTable.new(args)
 	buttonFrameMain.Size = UDim2.new(1, -5, 1, -62)
 	buttonFrameMain.ZIndex = 36
 	buttonFrameMain.ScrollBarThickness = 0
-
+	buttonFrameMain.ClipsDescendants = true
+	
 	UIListLayout_2.Parent = buttonFrameMain
 	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout_2.Padding = UDim.new(0, 9)
@@ -3687,8 +3694,11 @@ function InterfaceManagerTable.new(args)
 			InterfaceManagerTable:Tween(TabButtonOpen , TweenInfo.new(0.12) ,{
 				Rotation = 180
 			})
+			
+			buttonFrameMain.ScrollBarThickness = 1
 		else
 			
+			buttonFrameMain.ScrollBarThickness = 0
 			InterfaceManagerTable:Tween(BlackFrame , TweenInfo.new(0.12) ,{
 				BackgroundTransparency = 1
 			})
@@ -4172,7 +4182,7 @@ function InterfaceManagerTable.new(args)
 		Icon.Size = UDim2.new(0.899999976, 0, 0.899999976, 0)
 		Icon.SizeConstraint = Enum.SizeConstraint.RelativeYY
 		Icon.ZIndex = 37
-		Icon.Image = InterfaceManagerTable:FetchIcon(args.Icon) or "";
+		Icon.Image = InterfaceManagerTable:FetchIcon(args.Icon) or tostring(args.Icon);
 
 		TextLabel.Parent = TabInput
 		TextLabel.AnchorPoint = Vector2.new(0, 0.5)
