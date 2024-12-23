@@ -24,7 +24,8 @@ InterfaceManagerTable.TweenService = game:GetService('TweenService');
 InterfaceManagerTable.Enum = {
 	Tab = {
 		Single = 'Single',
-		Multiple = 'Multiple'
+		Multiple = 'Multiple',
+		Chat = 'Chat',
 	};
 };
 
@@ -3596,11 +3597,11 @@ function InterfaceManagerTable.new(args)
 	UIListLayout_2.Parent = buttonFrameMain
 	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout_2.Padding = UDim.new(0, 100)
-	
+
 	InterfaceManagerTable:Tween(UIListLayout_2,TweenInfo.new(1,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 		Padding = UDim.new(0, 9)
 	})
-	
+
 	UIListLayout_2:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
 		buttonFrameMain.CanvasSize = UDim2.fromOffset(0,UIListLayout_2.AbsoluteContentSize.Y)
 	end)
@@ -3644,11 +3645,11 @@ function InterfaceManagerTable.new(args)
 	UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout_3.VerticalAlignment = Enum.VerticalAlignment.Center
 	UIListLayout_3.Padding = UDim.new(0, 100)
-	
+
 	InterfaceManagerTable:Tween(UIListLayout_3,TweenInfo.new(1,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 		Padding = UDim.new(0, 10)
 	})
-	
+
 	TabButtonOpen.Name = "TabButtonOpen"
 	TabButtonOpen.Parent = InterfaceManager
 	TabButtonOpen.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -3730,7 +3731,7 @@ function InterfaceManagerTable.new(args)
 		argsIndex.LoginLabel = argsIndex.LoginLabel or "Login";
 		argsIndex.Placeholder = argsIndex.Placeholder or "Enter Key";
 		KNC_Interface.Busy = true
-		
+
 		InterfaceManagerTable:Tween(MainFrame,TweenInfo.new(1.25,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 			Size = UDim2.fromOffset(300,150)
 		})
@@ -4074,7 +4075,7 @@ function InterfaceManagerTable.new(args)
 				end)
 			end)
 		end;
-		
+
 		KNC_Interface.Busy = false
 
 		InterfaceManagerTable:Tween(LoginFrame,TweenInfo.new(0.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
@@ -4284,11 +4285,11 @@ function InterfaceManagerTable.new(args)
 			UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 			UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 			UIListLayout.Padding = UDim.new(0, 500)
-			
+
 			InterfaceManagerTable:Tween(UIListLayout,TweenInfo.new(2,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				Padding = UDim.new(0, 5)
 			})
-			
+
 			UIListLayout:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
 				Center.CanvasSize = UDim2.fromOffset(0,UIListLayout.AbsoluteContentSize.Y)
 			end)
@@ -4350,6 +4351,467 @@ function InterfaceManagerTable.new(args)
 
 			KNC_Tab.Left = InterfaceManagerTable:CreateInstances(Left , EventSlide);
 			KNC_Tab.Right = InterfaceManagerTable:CreateInstances(Right , EventSlide);
+		elseif args.Type == 'Chat' then
+			
+			args.ChatName = args.ChatName or "@General";
+			args.Placeholder = args.Placeholder or "@General";
+			
+			local ChatFace = Instance.new("Frame")
+			local UICorner = Instance.new("UICorner")
+			local UIStroke = Instance.new("UIStroke")
+			local Content = Instance.new("TextLabel")
+			local Line = Instance.new("Frame")
+			local Buttons = Instance.new("Frame")
+			local UIListLayout = Instance.new("UIListLayout")
+			local ScrollingFrame = Instance.new("ScrollingFrame")
+			local UICorner_2 = Instance.new("UICorner")
+			local UIStroke_2 = Instance.new("UIStroke")
+			local UIListLayout_2 = Instance.new("UIListLayout")
+			local InputType = Instance.new("Frame")
+			local UICorner_3 = Instance.new("UICorner")
+			local UIStroke_3 = Instance.new("UIStroke")
+			local TextBox = Instance.new("TextBox")
+			local Frame = Instance.new("Frame")
+			local SendButton = Instance.new("ImageButton")
+
+			ChatFace.Name = "ChatFace"
+			ChatFace.Parent = TabFrame
+			ChatFace.AnchorPoint = Vector2.new(0.5, 0.5)
+			ChatFace.BackgroundColor3 = Color3.fromRGB(26, 26, 28)
+			ChatFace.BackgroundTransparency = 0.500
+			ChatFace.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			ChatFace.BorderSizePixel = 0
+			ChatFace.Position = UDim2.new(0.5, 0, 0.5, 0)
+			ChatFace.Size = UDim2.new(1, -5, 1, -5)
+			ChatFace.ZIndex = 8
+
+			UICorner.CornerRadius = UDim.new(0, 3)
+			UICorner.Parent = ChatFace
+
+			UIStroke.Transparency = 0.500
+			UIStroke.Color = Color3.fromRGB(24, 24, 24)
+			UIStroke.Parent = ChatFace
+
+			Content.Name = "Content"
+			Content.Parent = ChatFace
+			Content.AnchorPoint = Vector2.new(0.5, 0)
+			Content.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Content.BackgroundTransparency = 1.000
+			Content.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Content.BorderSizePixel = 0
+			Content.Position = UDim2.new(0.5, 0, 0, 10)
+			Content.Size = UDim2.new(1, -10, 0, 10)
+			Content.ZIndex = 8
+			Content.Font = Enum.Font.GothamMedium
+			Content.Text = args.ChatName
+			Content.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Content.TextSize = 14.000
+			Content.TextStrokeTransparency = 0.900
+			Content.TextTransparency = 0.200
+			Content.TextXAlignment = Enum.TextXAlignment.Left
+			Content.RichText = true
+			
+			Line.Name = "Line"
+			Line.Parent = ChatFace
+			Line.AnchorPoint = Vector2.new(0.5, 0)
+			Line.BackgroundColor3 = Color3.fromRGB(38, 38, 44)
+			Line.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Line.BorderSizePixel = 0
+			Line.Position = UDim2.new(0.5, 0, 0, 35)
+			Line.Size = UDim2.new(1, -10, 0, 1)
+			Line.ZIndex = 9
+
+			Buttons.Name = "Buttons"
+			Buttons.Parent = ChatFace
+			Buttons.AnchorPoint = Vector2.new(1, 0)
+			Buttons.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Buttons.BackgroundTransparency = 1.000
+			Buttons.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Buttons.BorderSizePixel = 0
+			Buttons.Position = UDim2.new(1, -5, 0, 5)
+			Buttons.Size = UDim2.new(0, 150, 0, 25)
+			Buttons.ZIndex = 9
+
+			UIListLayout.Parent = Buttons
+			UIListLayout.FillDirection = Enum.FillDirection.Horizontal
+			UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+			UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+			UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+			UIListLayout.Padding = UDim.new(0, 5)
+
+			ScrollingFrame.Parent = ChatFace
+			ScrollingFrame.Active = true
+			ScrollingFrame.AnchorPoint = Vector2.new(0.5, 0)
+			ScrollingFrame.BackgroundColor3 = Color3.fromRGB(23, 23, 25)
+			ScrollingFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			ScrollingFrame.BorderSizePixel = 0
+			ScrollingFrame.Position = UDim2.new(0.5, 0, 0, 42)
+			ScrollingFrame.Size = UDim2.new(1, -10, 1, -80)
+			ScrollingFrame.ZIndex = 10
+			ScrollingFrame.BottomImage = ""
+			ScrollingFrame.ScrollBarThickness = 2
+			ScrollingFrame.TopImage = ""
+
+			UICorner_2.CornerRadius = UDim.new(0, 3)
+			UICorner_2.Parent = ScrollingFrame
+
+			UIStroke_2.Transparency = 0.500
+			UIStroke_2.Color = Color3.fromRGB(35, 35, 35)
+			UIStroke_2.Parent = ScrollingFrame
+			
+			UIListLayout_2:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
+				ScrollingFrame.CanvasSize = UDim2.fromOffset(0,UIListLayout_2.AbsoluteContentSize.Y + 10)
+			end)
+			
+			UIListLayout_2.Parent = ScrollingFrame
+			UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
+			UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+
+			InputType.Name = "InputType"
+			InputType.Parent = ChatFace
+			InputType.AnchorPoint = Vector2.new(0.5, 1)
+			InputType.BackgroundColor3 = Color3.fromRGB(23, 23, 25)
+			InputType.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			InputType.BorderSizePixel = 0
+			InputType.Position = UDim2.new(0.5, 0, 1, -2)
+			InputType.Size = UDim2.new(1, -10, 0, 31)
+			InputType.ZIndex = 12
+
+			UICorner_3.CornerRadius = UDim.new(0, 4)
+			UICorner_3.Parent = InputType
+
+			UIStroke_3.Color = Color3.fromRGB(29, 29, 29)
+			UIStroke_3.Parent = InputType
+
+			TextBox.Parent = InputType
+			TextBox.AnchorPoint = Vector2.new(0, 0.5)
+			TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			TextBox.BackgroundTransparency = 1.000
+			TextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			TextBox.BorderSizePixel = 0
+			TextBox.Position = UDim2.new(0, 10, 0.5, 0)
+			TextBox.Size = UDim2.new(1, -45, 0.649999976, 0)
+			TextBox.ZIndex = 13
+			TextBox.ClearTextOnFocus = false
+			TextBox.Font = Enum.Font.GothamMedium
+			TextBox.PlaceholderText = args.Placeholder
+			TextBox.Text = ""
+			TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+			TextBox.TextSize = 14.000
+			TextBox.TextTransparency = 0.400
+			TextBox.TextXAlignment = Enum.TextXAlignment.Left
+
+			Frame.Parent = InputType
+			Frame.AnchorPoint = Vector2.new(1, 0.5)
+			Frame.BackgroundColor3 = Color3.fromRGB(29, 29, 29)
+			Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Frame.BorderSizePixel = 0
+			Frame.Position = UDim2.new(1, -30, 0.5, 0)
+			Frame.Size = UDim2.new(0, 1, 1, -5)
+			Frame.ZIndex = 13
+
+			SendButton.Name = "SendButton"
+			SendButton.Parent = InputType
+			SendButton.AnchorPoint = Vector2.new(1, 0.5)
+			SendButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			SendButton.BackgroundTransparency = 1.000
+			SendButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			SendButton.BorderSizePixel = 0
+			SendButton.Position = UDim2.new(1, -3, 0.5, 0)
+			SendButton.Size = UDim2.new(0.75, 0, 0.75, 0)
+			SendButton.SizeConstraint = Enum.SizeConstraint.RelativeYY
+			SendButton.ZIndex = 15
+			SendButton.Image = "rbxassetid://76645474804869"
+			SendButton.ImageTransparency = 0.300;
+			
+			
+			local TweenInfoMain = TweenInfo.new(0.35,Enum.EasingStyle.Quint , Enum.EasingDirection.InOut);
+			
+			
+			EventSlide:GetPropertyChangedSignal('Value'):Connect(function()
+				if EventSlide.Value then
+					InterfaceManagerTable:Tween(SendButton,TweenInfoMain,{
+						ImageTransparency = 0.300,
+					})
+					
+					InterfaceManagerTable:Tween(Frame,TweenInfoMain,{
+						BackgroundTransparency = 0,
+					})
+					
+					InterfaceManagerTable:Tween(Content,TweenInfoMain,{
+						TextStrokeTransparency = 0.9,
+						TextTransparency = 0.200
+					})
+					
+					InterfaceManagerTable:Tween(ChatFace,TweenInfoMain,{
+						BackgroundTransparency = 0.5,
+					})
+					
+					InterfaceManagerTable:Tween(ScrollingFrame,TweenInfoMain,{
+						BackgroundTransparency = 0,
+					})
+					
+					InterfaceManagerTable:Tween(InputType,TweenInfoMain,{
+						BackgroundTransparency = 0,
+					})
+					
+					InterfaceManagerTable:Tween(TextBox,TweenInfoMain,{
+						TextTransparency = 0.4,
+					})
+				else
+					InterfaceManagerTable:Tween(SendButton,TweenInfo.new(0.4),{
+						ImageTransparency = 1,
+					})
+
+					InterfaceManagerTable:Tween(Frame,TweenInfo.new(0.4),{
+						BackgroundTransparency = 1,
+					})
+
+					InterfaceManagerTable:Tween(Content,TweenInfo.new(0.4),{
+						TextStrokeTransparency = 1,
+						TextTransparency = 1
+					})
+
+					InterfaceManagerTable:Tween(ChatFace,TweenInfo.new(0.4),{
+						BackgroundTransparency = 1,
+					})
+
+					InterfaceManagerTable:Tween(ScrollingFrame,TweenInfo.new(0.4),{
+						BackgroundTransparency = 1,
+					})
+
+					InterfaceManagerTable:Tween(InputType,TweenInfo.new(0.4),{
+						BackgroundTransparency = 1,
+					})
+
+					InterfaceManagerTable:Tween(TextBox,TweenInfo.new(0.4),{
+						TextTransparency = 1,
+					})
+				end;
+			end);
+			
+			function KNC_Tab:ClearMessage()
+				for i,v in next, ScrollingFrame:GetChildren() do
+					if v:IsA('Frame') then
+						v:Destroy()
+					end
+				end
+			end;
+			
+			function KNC_Tab:SendMessage(option)
+				option.Profile = option.Profile or 'rbxassetid://15011943540';
+				option.Username = option.Username or "Unknow";
+				option.Content = option.Content;
+				
+				local MainMessage = Instance.new("Frame")
+				local Profile = Instance.new("Frame")
+				local Icon = Instance.new("ImageLabel")
+				local UICorner = Instance.new("UICorner")
+				local TextLabel = Instance.new("TextLabel")
+				local Content = Instance.new("TextLabel")
+
+				MainMessage.Name = "MainMessage"
+				MainMessage.Parent = ScrollingFrame
+				MainMessage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				MainMessage.BackgroundTransparency = 1.000
+				MainMessage.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				MainMessage.BorderSizePixel = 0
+				MainMessage.Size = UDim2.new(1, -10, 0, 15)
+				MainMessage.ZIndex = 11
+				MainMessage.ClipsDescendants = true
+				
+				Profile.Name = "Profile"
+				Profile.Parent = MainMessage
+				Profile.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Profile.BackgroundTransparency = 1.000
+				Profile.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Profile.BorderSizePixel = 0
+				Profile.Size = UDim2.new(1, 0, 0, 25)
+				Profile.ZIndex = 11
+
+				Icon.Name = "Icon"
+				Icon.Parent = Profile
+				Icon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Icon.BackgroundTransparency = 1.000
+				Icon.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Icon.BorderSizePixel = 0
+				Icon.Size = UDim2.new(1, 0, 1, 0)
+				Icon.SizeConstraint = Enum.SizeConstraint.RelativeYY
+				Icon.ZIndex = 12
+				Icon.Image = option.Profile
+
+				UICorner.CornerRadius = UDim.new(1, 0)
+				UICorner.Parent = Icon
+
+				TextLabel.Parent = Profile
+				TextLabel.AnchorPoint = Vector2.new(0, 0.5)
+				TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				TextLabel.BackgroundTransparency = 1.000
+				TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				TextLabel.BorderSizePixel = 0
+				TextLabel.Position = UDim2.new(0, 30, 0.5, 0)
+				TextLabel.Size = UDim2.new(1, 0, 0.5, 0)
+				TextLabel.ZIndex = 12
+				TextLabel.Font = Enum.Font.GothamMedium
+				TextLabel.Text = option.Username
+				TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+				TextLabel.TextSize = 12.000
+				TextLabel.TextTransparency = 0.200
+				TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+				TextLabel.RichText = true
+				
+				Content.Name = "Content"
+				Content.Parent = MainMessage
+				Content.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Content.BackgroundTransparency = 1.000
+				Content.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Content.BorderSizePixel = 0
+				Content.Position = UDim2.new(0, 30, 0, 26)
+				Content.Size = UDim2.new(1, 0, 0, 30)
+				Content.ZIndex = 13
+				Content.Font = Enum.Font.GothamMedium
+				Content.Text = option.Content
+				Content.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Content.TextSize = 10.000
+				Content.TextTransparency = 0.500
+				Content.TextXAlignment = Enum.TextXAlignment.Left
+				Content.TextYAlignment = Enum.TextYAlignment.Top
+				Content.RichText = true
+				
+				local upd = function()
+					local isze = InterfaceManagerTable:GetTextSize(Content.Text,Content.TextSize,Content.Font);
+					
+					InterfaceManagerTable:Tween(MainMessage,TweenInfo.new(0.1),{
+						Size = UDim2.new(1, -10, 0, 30 + isze.Y)
+					})
+					
+					InterfaceManagerTable:Tween(Content,TweenInfo.new(0.1),{
+						Size = UDim2.new(1, 0, 0, isze.Y + 5)
+					})
+				end;
+				
+				upd();
+			end;
+			
+			function KNC_Tab:OnMessage(callback)
+				TextBox.FocusLost:Connect(function(a)
+					if a then
+						if not TextBox.Text:byte() then
+							return
+						end;
+						
+						callback(TextBox.Text);
+						TextBox.Text = "";
+					end;
+				end)
+				
+				SendButton.MouseButton1Click:Connect(function()
+					if not TextBox.Text:byte() then
+						return
+					end;
+					
+					callback(TextBox.Text);
+					TextBox.Text = "";
+				end)
+			end;
+			
+			function KNC_Tab:AddButton(option)
+				option.Title = option.Title or "Button";
+				option.Callback = option.Callback or function() end;
+				
+				local ButtonFrame = Instance.new("Frame")
+				local UICorner = Instance.new("UICorner")
+				local UIStroke = Instance.new("UIStroke")
+				local Text = Instance.new("TextLabel")
+
+				ButtonFrame.Name = "ButtonFrame"
+				ButtonFrame.Parent = Buttons
+				ButtonFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+				ButtonFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 21)
+				ButtonFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				ButtonFrame.BorderSizePixel = 0
+				ButtonFrame.Position = UDim2.new(0.75, 0, 0.649999976, 0)
+				ButtonFrame.Size = UDim2.new(0.899999976, 65, 0.899999976, 0)
+				ButtonFrame.SizeConstraint = Enum.SizeConstraint.RelativeYY
+
+				UICorner.CornerRadius = UDim.new(0, 4)
+				UICorner.Parent = ButtonFrame
+
+				UIStroke.Color = Color3.fromRGB(29, 29, 29)
+				UIStroke.Parent = ButtonFrame
+
+				Text.Name = "Text"
+				Text.Parent = ButtonFrame
+				Text.AnchorPoint = Vector2.new(0.5, 0.5)
+				Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Text.BackgroundTransparency = 1.000
+				Text.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Text.BorderSizePixel = 0
+				Text.Position = UDim2.new(0.5, 0, 0.5, 0)
+				Text.Size = UDim2.new(1, 0, 0.5, 0)
+				Text.Font = Enum.Font.GothamMedium
+				Text.Text = option.Title
+				Text.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Text.TextSize = 14.000
+				Text.TextTransparency = 0.200
+				
+				local uptext = function()
+					local siz = InterfaceManagerTable:GetTextSize(Text.Text , Text.TextSize , Text.Font);
+					
+					if siz then
+						InterfaceManagerTable:Tween(ButtonFrame,TweenInfo.new(0.1),{
+							Size = UDim2.new(0, siz.X + 10, 0.899999976, 0)
+						})
+					end;
+				end;
+				
+				local input = InterfaceManagerTable:InputButton(ButtonFrame);
+				
+				input.MouseEnter:Connect(function()
+					InterfaceManagerTable:Tween(Text,TweenInfo.new(0.1),{
+						TextTransparency = 0
+					})
+					
+					InterfaceManagerTable:Tween(UIStroke,TweenInfo.new(0.1),{
+						Color = Color3.fromRGB(33, 33, 33)
+					})
+				end);
+				
+				input.MouseLeave:Connect(function()
+					
+					InterfaceManagerTable:Tween(Text,TweenInfo.new(0.1),{
+						TextTransparency = 0.2
+					})
+
+					InterfaceManagerTable:Tween(UIStroke,TweenInfo.new(0.1),{
+						Color = Color3.fromRGB(29, 29, 29)
+					})
+				end)
+				
+				input.MouseButton1Click:Connect(function()
+					
+					InterfaceManagerTable:NewRipple(input)
+					
+					option.Callback(option);
+				end);
+				
+				uptext();
+				
+				function option:Title(new)
+					
+					Text.Text = new;
+					
+					uptext();
+				end;
+				
+				function option:Visible(new)
+					ButtonFrame.Visible = new;
+				end;
+				
+				return option;
+			end;
+			
+			
 		end;
 
 		KNC_Interface.Tabs[TabInput] = CallFunction;
@@ -4461,7 +4923,7 @@ function InterfaceManagerTable.new(args)
 			})
 		end
 	end)
-	
+
 	game:GetService('UserInputService').InputBegan:Connect(function(a,f)
 		if not f and a.KeyCode == args.Keybind and not KNC_Interface.Busy then
 			KNC_Interface.Toggle = not KNC_Interface.Toggle;
