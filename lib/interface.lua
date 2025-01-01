@@ -3727,6 +3727,8 @@ function InterfaceManagerTable.new(args)
 		argsIndex.Title = argsIndex.Title or "Key System";
 		argsIndex.OnClick = argsIndex.OnClick or function() end;
 		argsIndex.OnLogin = argsIndex.OnLogin or function() end;
+		argsIndex.OnStart = argsIndex.OnStart or function() end;
+		
 		argsIndex.ClickLabel = argsIndex.ClickLabel or "Get Key";
 		argsIndex.LoginLabel = argsIndex.LoginLabel or "Login";
 		argsIndex.Placeholder = argsIndex.Placeholder or "Enter Key";
@@ -3935,17 +3937,8 @@ function InterfaceManagerTable.new(args)
 				Color = Color3.fromRGB(33, 33, 33)
 			})
 		end)
-
-		local InputLogin = InterfaceManagerTable:InputButton(LoginFrame);
-		local InputClick = InterfaceManagerTable:InputButton(ClickFrame);
-
-		InputLogin.Modal = true;
-
-		InputLogin.MouseButton1Click:Connect(function()
-			if argsIndex.Auth then
-				return;
-			end;
-
+		
+		local MakeLoad = function()
 			InterfaceManagerTable:Tween(MainFrame,TweenInfo.new(0.5,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				Size = UDim2.fromOffset(100,100)
 			})
@@ -3979,18 +3972,13 @@ function InterfaceManagerTable.new(args)
 			InterfaceManagerTable:Tween(Title,TweenInfo.new(0.65,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				Position = UDim2.new(0.5, 0, 0, 40)
 			})
-
-			argsIndex.Auth = true;
-
-			if argsIndex.OnLogin(TextBox.Text) then
-				event:Fire();
-				return
-			end;
-
-			TextBox.Text = "";
-
-			argsIndex.Auth = false;
-
+			
+			argsIndex.Auth = true
+		end;
+		
+		local ToDefautl = function()
+			argsIndex.Auth = false
+			
 			InterfaceManagerTable:Tween(Title,TweenInfo.new(0.65,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				TextTransparency = 0,
 				TextStrokeTransparency = 0.900,
@@ -4027,7 +4015,49 @@ function InterfaceManagerTable.new(args)
 			InterfaceManagerTable:Tween(MainFrame,TweenInfo.new(0.75,Enum.EasingStyle.Quint,Enum.EasingDirection.InOut),{
 				Size = UDim2.fromOffset(300,150)
 			})
+		end;
+
+		local InputLogin = InterfaceManagerTable:InputButton(LoginFrame);
+		local InputClick = InterfaceManagerTable:InputButton(ClickFrame);
+
+		InputLogin.Modal = true;
+
+		InputLogin.MouseButton1Click:Connect(function()
+			if argsIndex.Auth then
+				return;
+			end;
+
+			MakeLoad();
+
+			argsIndex.Auth = true;
+
+			if argsIndex.OnLogin(TextBox.Text) then
+				event:Fire();
+				return
+			end;
+
+			TextBox.Text = "";
+
+			argsIndex.Auth = false;
+
+			ToDefautl()
 		end)
+		
+		local starterConnect = {};
+		
+		function starterConnect:Loading()
+			MakeLoad();
+		end;
+		
+		function starterConnect:Default()
+			ToDefautl()
+		end;
+		
+		function starterConnect:Cancel()
+			event:Fire();
+		end;
+		
+		task.delay(0.1,argsIndex.OnStart,starterConnect)
 
 		InputClick.MouseButton1Click:Connect(function()
 			argsIndex.OnClick()
@@ -4352,10 +4382,10 @@ function InterfaceManagerTable.new(args)
 			KNC_Tab.Left = InterfaceManagerTable:CreateInstances(Left , EventSlide);
 			KNC_Tab.Right = InterfaceManagerTable:CreateInstances(Right , EventSlide);
 		elseif args.Type == 'Chat' then
-			
+
 			args.ChatName = args.ChatName or "@General";
 			args.Placeholder = args.Placeholder or "@General";
-			
+
 			local ChatFace = Instance.new("Frame")
 			local UICorner = Instance.new("UICorner")
 			local UIStroke = Instance.new("UIStroke")
@@ -4410,7 +4440,7 @@ function InterfaceManagerTable.new(args)
 			Content.TextTransparency = 0.200
 			Content.TextXAlignment = Enum.TextXAlignment.Left
 			Content.RichText = true
-			
+
 			Line.Name = "Line"
 			Line.Parent = ChatFace
 			Line.AnchorPoint = Vector2.new(0.5, 0)
@@ -4458,11 +4488,11 @@ function InterfaceManagerTable.new(args)
 			UIStroke_2.Transparency = 0.500
 			UIStroke_2.Color = Color3.fromRGB(35, 35, 35)
 			UIStroke_2.Parent = ScrollingFrame
-			
+
 			UIListLayout_2:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
 				ScrollingFrame.CanvasSize = UDim2.fromOffset(0,UIListLayout_2.AbsoluteContentSize.Y + 10)
 			end)
-			
+
 			UIListLayout_2.Parent = ScrollingFrame
 			UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
 			UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
@@ -4523,38 +4553,38 @@ function InterfaceManagerTable.new(args)
 			SendButton.ZIndex = 15
 			SendButton.Image = "rbxassetid://76645474804869"
 			SendButton.ImageTransparency = 0.300;
-			
-			
+
+
 			local TweenInfoMain = TweenInfo.new(0.35,Enum.EasingStyle.Quint , Enum.EasingDirection.InOut);
-			
-			
+
+
 			EventSlide:GetPropertyChangedSignal('Value'):Connect(function()
 				if EventSlide.Value then
 					InterfaceManagerTable:Tween(SendButton,TweenInfoMain,{
 						ImageTransparency = 0.300,
 					})
-					
+
 					InterfaceManagerTable:Tween(Frame,TweenInfoMain,{
 						BackgroundTransparency = 0,
 					})
-					
+
 					InterfaceManagerTable:Tween(Content,TweenInfoMain,{
 						TextStrokeTransparency = 0.9,
 						TextTransparency = 0.200
 					})
-					
+
 					InterfaceManagerTable:Tween(ChatFace,TweenInfoMain,{
 						BackgroundTransparency = 0.5,
 					})
-					
+
 					InterfaceManagerTable:Tween(ScrollingFrame,TweenInfoMain,{
 						BackgroundTransparency = 0,
 					})
-					
+
 					InterfaceManagerTable:Tween(InputType,TweenInfoMain,{
 						BackgroundTransparency = 0,
 					})
-					
+
 					InterfaceManagerTable:Tween(TextBox,TweenInfoMain,{
 						TextTransparency = 0.4,
 					})
@@ -4589,7 +4619,7 @@ function InterfaceManagerTable.new(args)
 					})
 				end;
 			end);
-			
+
 			function KNC_Tab:ClearMessage()
 				for i,v in next, ScrollingFrame:GetChildren() do
 					if v:IsA('Frame') then
@@ -4597,12 +4627,12 @@ function InterfaceManagerTable.new(args)
 					end
 				end
 			end;
-			
+
 			function KNC_Tab:SendMessage(option)
 				option.Profile = option.Profile or 'rbxassetid://15011943540';
 				option.Username = option.Username or "Unknow";
 				option.Content = option.Content;
-				
+
 				local MainMessage = Instance.new("Frame")
 				local Profile = Instance.new("Frame")
 				local Icon = Instance.new("ImageLabel")
@@ -4619,7 +4649,7 @@ function InterfaceManagerTable.new(args)
 				MainMessage.Size = UDim2.new(1, -10, 0, 15)
 				MainMessage.ZIndex = 11
 				MainMessage.ClipsDescendants = true
-				
+
 				Profile.Name = "Profile"
 				Profile.Parent = MainMessage
 				Profile.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -4659,7 +4689,7 @@ function InterfaceManagerTable.new(args)
 				TextLabel.TextTransparency = 0.200
 				TextLabel.TextXAlignment = Enum.TextXAlignment.Left
 				TextLabel.RichText = true
-				
+
 				Content.Name = "Content"
 				Content.Parent = MainMessage
 				Content.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -4677,48 +4707,48 @@ function InterfaceManagerTable.new(args)
 				Content.TextXAlignment = Enum.TextXAlignment.Left
 				Content.TextYAlignment = Enum.TextYAlignment.Top
 				Content.RichText = true
-				
+
 				local upd = function()
 					local isze = InterfaceManagerTable:GetTextSize(Content.Text,Content.TextSize,Content.Font);
-					
+
 					InterfaceManagerTable:Tween(MainMessage,TweenInfo.new(0.1),{
 						Size = UDim2.new(1, -10, 0, 30 + isze.Y)
 					})
-					
+
 					InterfaceManagerTable:Tween(Content,TweenInfo.new(0.1),{
 						Size = UDim2.new(1, 0, 0, isze.Y + 5)
 					})
 				end;
-				
+
 				upd();
 			end;
-			
+
 			function KNC_Tab:OnMessage(callback)
 				TextBox.FocusLost:Connect(function(a)
 					if a then
 						if not TextBox.Text:byte() then
 							return
 						end;
-						
+
 						callback(TextBox.Text);
 						TextBox.Text = "";
 					end;
 				end)
-				
+
 				SendButton.MouseButton1Click:Connect(function()
 					if not TextBox.Text:byte() then
 						return
 					end;
-					
+
 					callback(TextBox.Text);
 					TextBox.Text = "";
 				end)
 			end;
-			
+
 			function KNC_Tab:AddButton(option)
 				option.Title = option.Title or "Button";
 				option.Callback = option.Callback or function() end;
-				
+
 				local ButtonFrame = Instance.new("Frame")
 				local UICorner = Instance.new("UICorner")
 				local UIStroke = Instance.new("UIStroke")
@@ -4754,31 +4784,31 @@ function InterfaceManagerTable.new(args)
 				Text.TextColor3 = Color3.fromRGB(255, 255, 255)
 				Text.TextSize = 14.000
 				Text.TextTransparency = 0.200
-				
+
 				local uptext = function()
 					local siz = InterfaceManagerTable:GetTextSize(Text.Text , Text.TextSize , Text.Font);
-					
+
 					if siz then
 						InterfaceManagerTable:Tween(ButtonFrame,TweenInfo.new(0.1),{
 							Size = UDim2.new(0, siz.X + 10, 0.899999976, 0)
 						})
 					end;
 				end;
-				
+
 				local input = InterfaceManagerTable:InputButton(ButtonFrame);
-				
+
 				input.MouseEnter:Connect(function()
 					InterfaceManagerTable:Tween(Text,TweenInfo.new(0.1),{
 						TextTransparency = 0
 					})
-					
+
 					InterfaceManagerTable:Tween(UIStroke,TweenInfo.new(0.1),{
 						Color = Color3.fromRGB(33, 33, 33)
 					})
 				end);
-				
+
 				input.MouseLeave:Connect(function()
-					
+
 					InterfaceManagerTable:Tween(Text,TweenInfo.new(0.1),{
 						TextTransparency = 0.2
 					})
@@ -4787,31 +4817,31 @@ function InterfaceManagerTable.new(args)
 						Color = Color3.fromRGB(29, 29, 29)
 					})
 				end)
-				
+
 				input.MouseButton1Click:Connect(function()
-					
+
 					InterfaceManagerTable:NewRipple(input)
-					
+
 					option.Callback(option);
 				end);
-				
+
 				uptext();
-				
+
 				function option:Title(new)
-					
+
 					Text.Text = new;
-					
+
 					uptext();
 				end;
-				
+
 				function option:Visible(new)
 					ButtonFrame.Visible = new;
 				end;
-				
+
 				return option;
 			end;
-			
-			
+
+
 		end;
 
 		KNC_Interface.Tabs[TabInput] = CallFunction;
