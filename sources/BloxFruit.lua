@@ -10,6 +10,8 @@
                                                                                                                                
 ]]
 
+if script_key then return loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/84540224acb21db4b7ffadb76a63fefd.lua"))(); end;
+
 local lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/3345-c-a-t-s-u-s/Kncrypt/refs/heads/main/lib/AuthLib.lua'))();
 
 local win = lib.new('Key System');
