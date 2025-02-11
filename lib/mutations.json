@@ -1,0 +1,344 @@
+{
+  "Blessed": {
+    "PriceMultiply": 10,
+    "Color": null,
+    "Display": "Blessed",
+    "Chance": 0
+  },
+  "Electric Shock": {
+    "PriceMultiply": 3.5,
+    "Color": null,
+    "Display": "Electric Shock",
+    "Chance": 0
+  },
+  "Silver": {
+    "PriceMultiply": 1.6,
+    "Color": null,
+    "Display": "Silver",
+    "Chance": 15
+  },
+  "Mosaic": {
+    "PriceMultiply": 1.5,
+    "Color": null,
+    "Display": "Mosaic",
+    "Chance": 10
+  },
+  "Jolly": {
+    "PriceMultiply": 1.2,
+    "Color": null,
+    "Display": "Jolly",
+    "Chance": 0
+  },
+  "Celestial": {
+    "PriceMultiply": 2,
+    "Color": null,
+    "Display": "Celestial",
+    "Chance": 0
+  },
+  "Scorched": {
+    "PriceMultiply": 1.3,
+    "Color": null,
+    "Display": "Scorched",
+    "Chance": 9
+  },
+  "Fossilized": {
+    "PriceMultiply": 2.5,
+    "Color": null,
+    "Display": "Fossilized",
+    "Chance": 4
+  },
+  "Albino": {
+    "PriceMultiply": 1.1,
+    "Color": null,
+    "Display": "Albino",
+    "Chance": 30
+  },
+  "Abyssal": {
+    "Color": null,
+    "PriceMultiply": 1,
+    "SpecificZones": [
+      "The Depths"
+    ],
+    "Display": "Abyssal",
+    "Chance": 5
+  },
+  "Aurora": {
+    "PriceMultiply": 6.5,
+    "Color": null,
+    "Display": "Aurora",
+    "Chance": 0
+  },
+  "Darkened": {
+    "PriceMultiply": 1.3,
+    "Color": null,
+    "Display": "Darkened",
+    "Chance": 30
+  },
+  "Tentacle Surge": {
+    "PriceMultiply": 10,
+    "Color": null,
+    "Display": "Tentacle Surge",
+    "Chance": 0
+  },
+  "Kingâ€™s Blessing": {
+    "PriceMultiply": 1.5,
+    "Color": null,
+    "Display": "Kingâ€™s Blessing",
+    "Chance": 0
+  },
+  "Charred": {
+    "PriceMultiply": 0.5,
+    "Color": null,
+    "Display": "Charred",
+    "Chance": 0
+  },
+  "Studded": {
+    "PriceMultiply": 1.1,
+    "Color": null,
+    "Display": "Studded",
+    "Chance": 0
+  },
+  "Blighted": {
+    "PriceMultiply": 3,
+    "Color": null,
+    "Display": "Blighted",
+    "Chance": 0
+  },
+  "Aureate": {
+    "PriceMultiply": 4,
+    "Color": null,
+    "Display": "Aureate",
+    "Chance": 0
+  },
+  "Hexed": {
+    "PriceMultiply": 1.5,
+    "Color": null,
+    "Display": "Hexed",
+    "Chance": 15
+  },
+  "Chocolate": {
+    "PriceMultiply": 2.5,
+    "Color": null,
+    "Display": "Chocolate",
+    "Chance": 0
+  },
+  "Amber": {
+    "Color": null,
+    "PriceMultiply": 0.5,
+    "SpecificZones": [
+      "Ancient Isles"
+    ],
+    "Display": "Amber",
+    "Chance": 8
+  },
+  "Lightning": {
+    "PriceMultiply": 1,
+    "Color": null,
+    "Display": "Lightning",
+    "Chance": 0
+  },
+  "Mila's Magic": {
+    "PriceMultiply": 2.5,
+    "Color": null,
+    "Display": "Mila's Magic",
+    "Chance": 0
+  },
+  "Frozen": {
+    "PriceMultiply": 1.3,
+    "Color": null,
+    "Display": "Frozen",
+    "Chance": 10
+  },
+  "Firework": {
+    "PriceMultiply": 3.5,
+    "Color": null,
+    "Display": "Firework",
+    "Chance": 0
+  },
+  "Aurous": {
+    "PriceMultiply": 2,
+    "Color": null,
+    "Display": "Aurous",
+    "Chance": 0
+  },
+  "Minty": {
+    "PriceMultiply": 2.2,
+    "Color": null,
+    "Display": "Minty",
+    "Chance": 0
+  },
+  "Mythical": {
+    "PriceMultiply": 4.5,
+    "Color": null,
+    "Display": "Mythical",
+    "Chance": 1
+  },
+  "Anomalous": {
+    "PriceMultiply": 2.5,
+    "Color": null,
+    "Display": "Anomalous",
+    "Chance": 0
+  },
+  "Sandy": {
+    "PriceMultiply": 1.2,
+    "Color": null,
+    "Display": "Sandy",
+    "Chance": 0
+  },
+  "Festive": {
+    "PriceMultiply": 1.4,
+    "Color": null,
+    "Display": "Festive",
+    "Chance": 0
+  },
+  "Heavenly": {
+    "PriceMultiply": 5,
+    "Color": null,
+    "Display": "Heavenly",
+    "Chance": 0
+  },
+  "Unsellable": {
+    "PriceMultiply": 0,
+    "Color": null,
+    "Display": "Unsellable",
+    "Chance": 0
+  },
+  "Atlantean": {
+    "PriceMultiply": 3,
+    "Color": null,
+    "Display": "Atlantean",
+    "Chance": 0
+  },
+  "Glossy": {
+    "PriceMultiply": 1.6,
+    "Color": null,
+    "Display": "Glossy",
+    "Chance": 25
+  },
+  "Subspace": {
+    "PriceMultiply": 5,
+    "Color": null,
+    "Display": "Subspace",
+    "Chance": 0
+  },
+  "Midas": {
+    "PriceMultiply": 2,
+    "Color": null,
+    "Display": "Midas",
+    "Chance": 3
+  },
+  "Translucent": {
+    "PriceMultiply": 1.3,
+    "Color": null,
+    "Display": "Translucent",
+    "Chance": 20
+  },
+  "Sinister": {
+    "PriceMultiply": 1.9,
+    "Color": null,
+    "Display": "Sinister",
+    "Chance": 0
+  },
+  "Lunar": {
+    "PriceMultiply": 2.5,
+    "Color": null,
+    "Display": "Lunar",
+    "Chance": 20
+  },
+  "Nuclear": {
+    "PriceMultiply": 4,
+    "Color": null,
+    "Display": "Nuclear",
+    "Chance": 0
+  },
+  "Aureolin": {
+    "PriceMultiply": 5,
+    "Color": null,
+    "Display": "Aurulent",
+    "Chance": 0
+  },
+  "Seasonal": {
+    "PriceMultiply": 1.3,
+    "Color": null,
+    "Display": "Seasonal",
+    "Chance": 0
+  },
+  "Negative": {
+    "PriceMultiply": 1.3,
+    "Color": null,
+    "Display": "Negative",
+    "Chance": 30
+  },
+  "Aurulent": {
+    "PriceMultiply": 5,
+    "Color": null,
+    "Display": "Aurulent",
+    "Chance": 0
+  },
+  "Aurelian": {
+    "PriceMultiply": 3,
+    "Color": null,
+    "Display": "Aurelian",
+    "Chance": 0
+  },
+  "Revitalized": {
+    "PriceMultiply": 4,
+    "Color": null,
+    "Display": "Revitalized",
+    "Chance": 0
+  },
+  "Purified": {
+    "PriceMultiply": 2,
+    "Color": null,
+    "Display": "Purified",
+    "Chance": 0
+  },
+  "Sunken": {
+    "PriceMultiply": 4,
+    "Color": null,
+    "Display": "Sunken",
+    "Chance": 0
+  },
+  "Crystalized": {
+    "PriceMultiply": 1.75,
+    "Color": null,
+    "Display": "Crystalized",
+    "Chance": 0
+  },
+  "Wrath": {
+    "PriceMultiply": 6.5,
+    "Color": null,
+    "Display": "Wrath",
+    "Chance": 0
+  },
+  "Electric": {
+    "PriceMultiply": 1.45,
+    "Color": null,
+    "Display": "Electric",
+    "Chance": 15
+  },
+  "Sleet": {
+    "PriceMultiply": 2.4,
+    "Color": null,
+    "Display": "Sleet",
+    "Chance": 0
+  },
+  "Solarblaze": {
+    "PriceMultiply": 2.5,
+    "Color": null,
+    "Display": "Solarblaze",
+    "Chance": 0
+  },
+  "Greedy": {
+    "PriceMultiply": 4,
+    "Color": null,
+    "Display": "Greedy",
+    "Chance": 1.5
+  },
+  "Ghastly": {
+    "PriceMultiply": 2,
+    "Color": null,
+    "Display": "Ghastly",
+    "Chance": 0
+  }
+}
