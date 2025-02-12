@@ -20,13 +20,13 @@ local function CreateUI()
 end;
 
 local function GetSize(Instance : Model & BasePart) : UDim2
-	if Instance:IsA('BasePart') then
-		return UDim2.new(Instance.Size.X + 10,10,Instance.Size.Y + 10,10);
-	elseif Instance:IsA('Model') then
-		local world = Instance:GetModelSize();
+    if Instance:IsA('BasePart') then
+        return UDim2.new(Instance.Size.X + 15,10,Instance.Size.Y + 15,10);
+    elseif Instance:IsA('Model') then
+        local world = Instance:GetModelSize();
 
-		return UDim2.new(world.X + 10,10,world.Y + 10,10);
-	end;
+        return UDim2.new(world.X + 15,10,world.Y + 15,10);
+    end;
 end;
 
 function ESP_Lib.create(Model : Model, Configuration)
