@@ -59,7 +59,7 @@ function mcs.new(config)
 		
 		rawset(mcs.Zone[config.ZoneId] , target , IndexFuncs);
 		
-		BillboardGui.Parent = target
+		BillboardGui.Parent = mcs.Folder
 		BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		BillboardGui.Active = true
 		BillboardGui.Adornee = target
