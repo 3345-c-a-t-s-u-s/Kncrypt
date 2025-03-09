@@ -93,17 +93,7 @@ function clWalk.start()
 	clWalk.__thread = task.spawn(function()
 		local Humanoid : Humanoid = lp.Character:FindFirstChild('Humanoid');
 		
-		local bypassWalk = clWalk.raycast(clWalk.walk);
-		
-		if bypassWalk then
-			
-			Humanoid:MoveTo(clWalk.walk)
-			
-			return;
-		end;
-		
 		for i,v : PathWaypoint in next , clWalk.__path:GetWaypoints() do
-			Humanoid:MoveTo(v.Position);
 			local part = newPart()
 			
 			part.Position = v.Position;
@@ -113,13 +103,9 @@ function clWalk.start()
 			task.delay(1,part.Destroy,part)
 			
 			repeat task.wait()
-				local bypassWalk = clWalk.raycast(clWalk.walk);
+	
+				Humanoid:MoveTo(v.Position);
 
-				if bypassWalk then
-
-					Humanoid:MoveTo(clWalk.walk)
-					break;
-				end;
 			until (Vector3.new(Humanoid.RootPart.Position.X,0,Humanoid.RootPart.Position.Z) - Vector3.new(v.Position.X,0,v.Position.Z)).Magnitude <= 5;
 		end;
 	end);
