@@ -72,6 +72,8 @@ function clWalk.raycast(target : Vector3)
 end;
 
 function clWalk.isFinish()
+	if not clWalk.walk then return true end;
+	
 	local HumanoidRootPart : BasePart = lp.Character:FindFirstChild('HumanoidRootPart');
 
 	return (Vector3.new(clWalk.walk.X,0,clWalk.walk.Z) - Vector3.new(HumanoidRootPart.Position.X,0,HumanoidRootPart.Position.Z)).Magnitude <= 5;
