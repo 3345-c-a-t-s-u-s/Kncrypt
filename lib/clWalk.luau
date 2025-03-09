@@ -110,9 +110,9 @@ function clWalk.start()
 			
 			repeat task.wait()
 	
-				Humanoid:MoveTo(v.Position + Vector3.new(math.random(-1,1),math.random(-1,1),math.random(-1,1)));
+				Humanoid:MoveTo(v.Position + Vector3.new(math.random(-2,2),math.random(-1,1),math.random(-2,2)));
 
-				if v.Action == Enum.PathWaypointAction.Jump then
+				if v.Action == Enum.PathWaypointAction.Jump or Humanoid.RootPart.Velocity.Magnitude <= 3 then
 					PressInput(Enum.KeyCode.Space);
 				end;
 
