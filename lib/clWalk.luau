@@ -18,6 +18,12 @@ clWalk.walk = nil;
 clWalk.__path = nil;
 clWalk.rct = RaycastParams.new();
 
+local PressInput = function(keys)
+    game:GetService('VirtualInputManager'):SendKeyEvent(true, keys, false, game:GetService("Players").LocalPlayer.PlayerGui);
+    task.wait();
+    game:GetService('VirtualInputManager'):SendKeyEvent(false, keys, false, game:GetService("Players").LocalPlayer.PlayerGui);
+end;
+
 function clWalk._loadpath()
 	clWalk.__path = path:CreatePath({
 		AgentRadius = 2,
@@ -105,6 +111,10 @@ function clWalk.start()
 			repeat task.wait()
 	
 				Humanoid:MoveTo(v.Position);
+
+				if v.Action == Enum.PathWaypointAction.Jump then
+					PressInput(Enum.KeyCode.Space);
+				end;
 
 			until (Vector3.new(Humanoid.RootPart.Position.X,0,Humanoid.RootPart.Position.Z) - Vector3.new(v.Position.X,0,v.Position.Z)).Magnitude <= 5;
 		end;
