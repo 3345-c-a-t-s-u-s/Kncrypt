@@ -82,7 +82,7 @@ function clWalk.isFinish()
 	
 	local HumanoidRootPart : BasePart = lp.Character:FindFirstChild('HumanoidRootPart');
 
-	return (Vector3.new(clWalk.walk.X,0,clWalk.walk.Z) - Vector3.new(HumanoidRootPart.Position.X,0,HumanoidRootPart.Position.Z)).Magnitude <= 5;
+	return (Vector3.new(clWalk.walk.X,0,clWalk.walk.Z) - Vector3.new(HumanoidRootPart.Position.X,0,HumanoidRootPart.Position.Z)).Magnitude <= 3;
 end;
 
 function clWalk.waitFinish()
@@ -98,7 +98,11 @@ function clWalk.start()
 	
 	clWalk.__thread = task.spawn(function()
 		local Humanoid : Humanoid = lp.Character:FindFirstChild('Humanoid');
-		
+
+		if clWalk.__path.Status ~= Enum.PathStatus.Success then
+			Humanoid:MoveTo(clWalk.walk);
+		end;
+
 		for i,v : PathWaypoint in next , clWalk.__path:GetWaypoints() do
 			local part = newPart()
 			
@@ -114,9 +118,10 @@ function clWalk.start()
 
 				if v.Action == Enum.PathWaypointAction.Jump or Humanoid.RootPart.Velocity.Magnitude <= 3 then
 					PressInput(Enum.KeyCode.Space);
+					Humanoid:MoveTo(v.Position + Vector3.new(math.random(-15,15),math.random(-15,15),math.random(-15,15)));
 				end;
 
-			until (Vector3.new(Humanoid.RootPart.Position.X,0,Humanoid.RootPart.Position.Z) - Vector3.new(v.Position.X,0,v.Position.Z)).Magnitude <= 5;
+			until (Vector3.new(Humanoid.RootPart.Position.X,0,Humanoid.RootPart.Position.Z) - Vector3.new(v.Position.X,0,v.Position.Z)).Magnitude <= 3;
 		end;
 	end);
 end;
