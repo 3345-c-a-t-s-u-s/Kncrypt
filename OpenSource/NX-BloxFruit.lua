@@ -2,12 +2,6 @@
 
 
 
-
-
-
-
-
-
 local function getMethodLoading()
 	local GG = (getgenv and getgenv()) or _G or shared;
 	if GG.IdenG ~= nil then
